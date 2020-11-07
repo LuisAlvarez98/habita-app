@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("./middleware/cors");
 
 const authRoutes = require("./routes/auth");
+const habitRoutes = require("./routes/habit");
 
 /** Setup Mongoose */
 mongoose.connect("mongodb://localhost/habita", {
@@ -24,6 +25,7 @@ app.use(morgan("dev"));
 /** Setup routes */
 
 app.use(authRoutes);
+app.use(habitRoutes);
 
 app.get("/", function (req, res) {
 	res.send("Welcome to Habita, API working");
