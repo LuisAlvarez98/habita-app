@@ -7,11 +7,29 @@ import Register from "./views/Auth/Register";
 import { Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Dashboard from "./views/Dashboard/Dashboard";
+import Background from "./Images/bg-img.jpg";
+
 function App() {
   const customHistory = createBrowserHistory();
 
+  const mainBg = {
+    backgroundImage: "url(Background)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
   return (
-    <div className="App">
+    <div
+      style={{
+        backgroundImage: `url(${Background})`,
+        objectFit: "cover",
+        width: "100%",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+      className="App"
+    >
       <header className="App-header">
         <Router history={customHistory}>
           <div>
