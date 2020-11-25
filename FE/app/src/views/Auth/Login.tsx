@@ -1,8 +1,13 @@
 import React from "react";
 import { Button, TextField } from "@material-ui/core";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import Background from "../../Images/Background.png";
-import { makeStyles } from "@material-ui/core/styles";
+import styled from "styled-components";
+import { MuiThemeProvider, createMuiTheme, makeStyles} from "@material-ui/core/styles";
+import { useHistory } from 'react-router-dom';
+
+var userData = {
+  email: "",
+  password: ""
+}
 
 const theme = createMuiTheme({
   palette: {
@@ -15,37 +20,82 @@ const theme = createMuiTheme({
   },
 });
 
+
+
+const Container = styled.div`
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  color: white;
+  height: 750px;
+  width: 100%;
+`;
+
+
+
+const TextFieldWrapper = styled(TextField)`
+  fieldset {
+    border-radius: 50px;
+    color: white;
+  },
+  .MuiInputBase-input{
+    color: white;
+  }
+  
+`;
+
 const Login = () => {
+  let history = useHistory();
+  
+  function pushRegister() {
+    history.push("/register");
+  }
+
   return (
     <MuiThemeProvider theme={theme}>
-      {/* document.body.style= {mainBg}; */}
+      <Container>
       <div>
-        <h1>Login page</h1>
+        <h1>Login</h1>
         <div className="login-form">
           <form id="login-form">
-            <TextField
-              id="filled-basic"
-              label="Usuario"
-              variant="filled"
-              className="login-field"
+            <div>
+            <TextFieldWrapper
+            style = {{
+              marginBottom: "1em",
+            }}
+                id="outlined-basic"
+                label="Email"
+                placeholder="example@email.com"
+                variant="outlined"
             />
-            <br />
-            <TextField
-              id="filled-basic"
-              label="Contraseña"
-              variant="filled"
-              className="login-field"
+            </div>
+            <TextFieldWrapper
+              id="outlined-basic"
+              label="Password"
+              placeholder="Password"
+              variant="outlined"
+              type="password"
             />
-            <br /> <br />
-            <Button variant="contained" color="primary">
+            <div>
+            <Button variant="contained" 
+                  style={{
+                    marginTop: "3em",
+                    borderRadius: 35,
+                    padding: "14px 18px",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    width: "150px",
+                  }}
+              color="primary">
               Sign in
             </Button>
-            <br />
+            </div>
             <small>You don't have an account?</small>
-            <Button color="secondary">Register now!</Button>
+            <Button onClick={pushRegister} color="secondary">Register now!</Button>
           </form>
         </div>
       </div>
+      </Container>
     </MuiThemeProvider>
   );
 };
