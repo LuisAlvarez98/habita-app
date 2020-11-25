@@ -7,7 +7,8 @@ import Register from "./views/Auth/Register";
 import { Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Dashboard from "./views/Dashboard/Dashboard";
-import Background from "./Images/bg-img.jpg";
+import Background from "./img/bg-img.jpg";
+import Navbar from "./views/Navbar/Navbar";
 
 function App() {
   const customHistory = createBrowserHistory();
@@ -31,6 +32,8 @@ function App() {
       className="App"
     >
       <header className="App-header">
+        {/*This navbar must be modified for private routes and not private routes*/}
+        <Navbar />
         <Router history={customHistory}>
           <div>
             <Switch>

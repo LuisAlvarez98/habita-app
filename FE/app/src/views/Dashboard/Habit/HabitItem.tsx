@@ -25,8 +25,8 @@ const CheckButton = styled.div`
   }
 `;
 interface HabitItemProps {
-  title: String;
-  coins: Number;
+  title: string;
+  coins: number;
 }
 const HabitItem = (props: HabitItemProps) => {
   return (
@@ -35,7 +35,7 @@ const HabitItem = (props: HabitItemProps) => {
         <Grid container spacing={0}>
           <Grid
             item
-            xs={6}
+            xs={3}
             style={{
               alignSelf: "center",
               textAlign: "left",
@@ -47,8 +47,8 @@ const HabitItem = (props: HabitItemProps) => {
           </Grid>
           <Grid
             item
-            xs={3}
-            style={{ alignSelf: "center", textAlign: "left", color: "white" }}
+            xs={6}
+            style={{ alignSelf: "center", textAlign: "center", color: "white" }}
           >
             {props.coins}
           </Grid>
