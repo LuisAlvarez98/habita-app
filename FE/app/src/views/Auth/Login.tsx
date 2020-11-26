@@ -1,8 +1,13 @@
 import React from "react";
 import { Button, TextField } from "@material-ui/core";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import Background from "../../Images/Background.png";
-import { makeStyles } from "@material-ui/core/styles";
+import styled from "styled-components";
+import axios from "axios";
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  makeStyles,
+} from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 
 const theme = createMuiTheme({
   palette: {
@@ -15,37 +20,104 @@ const theme = createMuiTheme({
   },
 });
 
+const Container = styled.div`
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  color: white;
+  height: 750px;
+  width: 100%;
+`;
+
+const TextFieldWrapper = styled(TextField)`
+  fieldset {
+    border-radius: 50px;
+    color: white;
+  }
+  ,
+  .MuiInputBase-input {
+    color: white;
+  }
+`;
+
 const Login = () => {
+  let history = useHistory();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  function pushRegister() {
+    history.push("/register");
+  }
+
+  const handleLogin = async () => {
+    const res = await axios
+      .post("http://localhost:8080/api/user/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        if (res.status === 200) console.log("Logged in");
+      })
+      .catch((err) => {
+        if (err.response.status === 404) console.log("Incorrect email");
+        if (err.response.status === 400) console.log("Incorrect password");
+      });
+  };
+
   return (
     <MuiThemeProvider theme={theme}>
-      {/* document.body.style= {mainBg}; */}
-      <div>
-        <h1>Login page</h1>
-        <div className="login-form">
-          <form id="login-form">
-            <TextField
-              id="filled-basic"
-              label="Usuario"
-              variant="filled"
-              className="login-field"
-            />
-            <br />
-            <TextField
-              id="filled-basic"
-              label="Contraseña"
-              variant="filled"
-              className="login-field"
-            />
-            <br /> <br />
-            <Button variant="contained" color="primary">
-              Sign in
-            </Button>
-            <br />
-            <small>You don't have an account?</small>
-            <Button color="secondary">Register now!</Button>
-          </form>
+      <Container>
+        <div>
+          <h1>Login</h1>
+          <div className="login-form">
+            <form id="login-form">
+              <div>
+                <TextFieldWrapper
+                  style={{
+                    marginBottom: "1em",
+                  }}
+                  id="outlined-basic"
+                  label="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@email.com"
+                  variant="outlined"
+                />
+              </div>
+              <TextFieldWrapper
+                id="outlined-basic"
+                label="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                variant="outlined"
+                type="password"
+              />
+              <div>
+                <Button
+                  variant="contained"
+                  style={{
+                    marginTop: "3em",
+                    borderRadius: 35,
+                    padding: "14px 18px",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    width: "150px",
+                  }}
+                  color="primary"
+                  onClick={handleLogin}
+                >
+                  Sign in
+                </Button>
+              </div>
+              <small>You don't have an account?</small>
+              <Button onClick={pushRegister} color="secondary">
+                Register now!
+              </Button>
+            </form>
+          </div>
         </div>
-      </div>
+      </Container>
     </MuiThemeProvider>
   );
 };
