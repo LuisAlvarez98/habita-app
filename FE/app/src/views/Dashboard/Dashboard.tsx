@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import HabitItem from "./Habit/HabitItem";
@@ -48,6 +48,10 @@ const mockDataFriends = [
 ];
 
 const Dashboard = () => {
+  useEffect(() => {
+    console.log(localStorage.getItem("accessToken"));
+  }, []);
+
   return (
     <MainContainer>
       <Grid container spacing={3}>

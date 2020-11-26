@@ -2,6 +2,7 @@ import React from "react";
 import { Button, TextField } from "@material-ui/core";
 import styled from "styled-components";
 import axios from "axios";
+import { useLocalStorage } from "use-hooks";
 import {
   MuiThemeProvider,
   createMuiTheme,
@@ -45,6 +46,15 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  const [accessToken, setAccessToken] = useLocalStorage<string>(
+    "accessToken",
+    ""
+  );
+  const [refreshToken, setRefreshToken] = useLocalStorage<string>(
+    "refreshToken",
+    ""
+  );
+
   function pushRegister() {
     history.push("/register");
   }
@@ -56,7 +66,11 @@ const Login = () => {
         password,
       })
       .then((res) => {
-        if (res.status === 200) console.log("Logged in");
+        if (res.status === 200) {
+          const { accessToken, refreshToken } = res.data;
+          setAccessToken(accessToken);
+          setRefreshToken(refreshToken);
+        }
       })
       .catch((err) => {
         if (err.response.status === 404) console.log("Incorrect email");
