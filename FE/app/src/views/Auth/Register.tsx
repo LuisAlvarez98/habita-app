@@ -1,9 +1,13 @@
 import React from "react";
 import { Button, TextField } from "@material-ui/core";
 import styled from "styled-components";
-import { MuiThemeProvider, createMuiTheme, makeStyles} from "@material-ui/core/styles";
-import { useHistory } from 'react-router-dom';
-
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  makeStyles,
+} from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -28,67 +32,107 @@ const TextFieldWrapper = styled(TextField)`
   fieldset {
     border-radius: 50px;
     color: white;
-  },
-  .MuiInputBase-input{
+  }
+  ,
+  .MuiInputBase-input {
     color: white;
   }
-  
 `;
-
 
 const Register = () => {
   let history = useHistory();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [cPassword, setCPassword] = React.useState("");
+  const [name, setName] = React.useState("");
+
+  const handleRegister = async () => {
+    var readyToRegister: boolean = false;
+
+    if (
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      ) &&
+      password == cPassword &&
+      name != ""
+    ) {
+      readyToRegister = true;
+    } else {
+      console.log("Invalid info.");
+    }
+    if (readyToRegister) {
+      const res = await axios
+        .post("http://localhost:8080/api/user/register", {
+          email,
+          password,
+        })
+        .then((res) => {
+          if (res.status === 200) console.log("User registered");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <MuiThemeProvider theme={theme}>
       <Container>
-      <div>
-        <h1>Register</h1>
-        <div className="login-form">
-          <form id="login-form">
-            <div>
-            <TextFieldWrapper
-            style = {{
-              marginBottom: "1em",
-            }}
-                id="outlined-basic"
-                label="Name"
-                placeholder="Name"
-                variant="outlined"
-            />
-            </div>
-            <div>
-            <TextFieldWrapper
-            style = {{
-              marginBottom: "1em",
-            }}
-                id="outlined-basic"
-                label="Email"
-                placeholder="example@email.com"
-                variant="outlined"
-            />
-            </div>
-            <TextFieldWrapper
-            style = {{
+        <div>
+          <h1>Register</h1>
+          <div className="login-form">
+            <form id="login-form">
+              <div>
+                <TextFieldWrapper
+                  style={{
+                    marginBottom: "1em",
+                  }}
+                  id="outlined-basic"
+                  label="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Name"
+                  variant="outlined"
+                />
+              </div>
+              <div>
+                <TextFieldWrapper
+                  style={{
+                    marginBottom: "1em",
+                  }}
+                  id="outlined-basic"
+                  label="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@email.com"
+                  variant="outlined"
+                />
+              </div>
+              <TextFieldWrapper
+                style={{
                   marginBottom: "1em",
-              }}
-              id="outlined-basic"
-              label="Password"
-              placeholder="Password"
-              variant="outlined"
-              type="password"
-            />
-            <div>
-            </div>
-            <TextFieldWrapper
-              id="outlined-basic"
-              label="ConfirmPassword"
-              placeholder="Password"
-              variant="outlined"
-              type="password"
-            />
-            <div>
-            <Button variant="contained" 
+                }}
+                id="outlined-basic"
+                label="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                variant="outlined"
+                type="password"
+              />
+              <div></div>
+              <TextFieldWrapper
+                id="outlined-basic"
+                label="ConfirmPassword"
+                value={cPassword}
+                onChange={(e) => setCPassword(e.target.value)}
+                placeholder="Password"
+                variant="outlined"
+                type="password"
+              />
+              <div>
+                <Button
+                  variant="contained"
                   style={{
                     marginTop: "3em",
                     borderRadius: 35,
@@ -97,14 +141,15 @@ const Register = () => {
                     fontWeight: "bold",
                     width: "150px",
                   }}
-              color="primary">
-              Sign Up
-            </Button>
-            </div>
-
-          </form>
+                  color="primary"
+                  onClick={handleRegister}
+                >
+                  Sign Up
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
       </Container>
     </MuiThemeProvider>
   );
