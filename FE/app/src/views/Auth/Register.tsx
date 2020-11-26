@@ -1,5 +1,157 @@
 import React from "react";
+import { Button, TextField } from "@material-ui/core";
+import styled from "styled-components";
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  makeStyles,
+} from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#35A8A4",
+    },
+    secondary: {
+      main: "#f44336",
+    },
+  },
+});
+
+const Container = styled.div`
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  color: white;
+  height: 750px;
+  width: 100%;
+`;
+
+const TextFieldWrapper = styled(TextField)`
+  fieldset {
+    border-radius: 50px;
+    color: white;
+  }
+  ,
+  .MuiInputBase-input {
+    color: white;
+  }
+`;
+
 const Register = () => {
-  return <div>Register</div>;
+  let history = useHistory();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [cPassword, setCPassword] = React.useState("");
+  const [name, setName] = React.useState("");
+
+  const handleRegister = async () => {
+    var readyToRegister: boolean = false;
+
+    if (
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      ) &&
+      password == cPassword &&
+      name != ""
+    ) {
+      readyToRegister = true;
+    } else {
+      console.log("Invalid info.");
+    }
+    if (readyToRegister) {
+      const res = await axios
+        .post("http://localhost:8080/api/user/register", {
+          email,
+          password,
+        })
+        .then((res) => {
+          if (res.status === 200) console.log("User registered");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  return (
+    <MuiThemeProvider theme={theme}>
+      <Container>
+        <div>
+          <h1>Register</h1>
+          <div className="login-form">
+            <form id="login-form">
+              <div>
+                <TextFieldWrapper
+                  style={{
+                    marginBottom: "1em",
+                  }}
+                  id="outlined-basic"
+                  label="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Name"
+                  variant="outlined"
+                />
+              </div>
+              <div>
+                <TextFieldWrapper
+                  style={{
+                    marginBottom: "1em",
+                  }}
+                  id="outlined-basic"
+                  label="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@email.com"
+                  variant="outlined"
+                />
+              </div>
+              <TextFieldWrapper
+                style={{
+                  marginBottom: "1em",
+                }}
+                id="outlined-basic"
+                label="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                variant="outlined"
+                type="password"
+              />
+              <div></div>
+              <TextFieldWrapper
+                id="outlined-basic"
+                label="ConfirmPassword"
+                value={cPassword}
+                onChange={(e) => setCPassword(e.target.value)}
+                placeholder="Password"
+                variant="outlined"
+                type="password"
+              />
+              <div>
+                <Button
+                  variant="contained"
+                  style={{
+                    marginTop: "3em",
+                    borderRadius: 35,
+                    padding: "14px 18px",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    width: "150px",
+                  }}
+                  color="primary"
+                  onClick={handleRegister}
+                >
+                  Sign Up
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </Container>
+    </MuiThemeProvider>
+  );
 };
 export default Register;
