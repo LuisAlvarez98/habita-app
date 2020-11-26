@@ -7,10 +7,10 @@ import Button from "@material-ui/core/Button";
 
 const MainContainer = styled.div`
   display: flex;
+  flex-flow: column;
   justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 16px;
+  align-content: center;
+  height: 100vh;
 `;
 
 const Container = styled.div`

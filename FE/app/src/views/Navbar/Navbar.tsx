@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomNavbar = styled(AppBar)`
   background-color: transparent;
+  position: absolute;
 `;
 const LogoImage = styled.img`
   width: 128px;

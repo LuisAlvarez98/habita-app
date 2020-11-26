@@ -13,16 +13,10 @@ import Navbar from "./views/Navbar/Navbar";
 function App() {
   const customHistory = createBrowserHistory();
 
-  const mainBg = {
-    backgroundImage: "url(Background)",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  };
   return (
     <div
       style={{
-        backgroundImage: `url(${Background})`,
+        backgroundImage: `linear-gradient(rgba(24,160,251,0), rgba(24,160,251,0.75)),url(${Background})`,
         objectFit: "cover",
         width: "100%",
         backgroundRepeat: "no-repeat",
