@@ -9,6 +9,7 @@ import { createBrowserHistory } from "history";
 import Dashboard from "./views/Dashboard/Dashboard";
 import Background from "./img/bg-img.jpg";
 import Navbar from "./views/Navbar/Navbar";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 function App() {
   const customHistory = createBrowserHistory();
@@ -43,9 +44,8 @@ function App() {
               <Route path="/register">
                 <Register />
               </Route>
-              <Route path="/dashboard">
-                <Dashboard />
-              </Route>
+              <PrivateRoute component={Dashboard} path="/dashboard">
+              </PrivateRoute>
             </Switch>
           </div>
         </Router>
