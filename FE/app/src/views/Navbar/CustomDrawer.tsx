@@ -62,7 +62,19 @@ export default function CustomDrawer() {
     history.push("/dashboard");
   };
 
-  const logoutUser = () => {};
+  const pushToQuests = () => {
+    history.push("/quests");
+  };
+
+  const pushToProfile = () => {
+    history.push("/profile");
+  };
+
+  const logoutUser = () => {
+    localStorage.setItem("accessToken", "");
+    localStorage.setItem("refreshToken", "");
+    history.push("/");
+  };
 
   const list = (anchor: string) => (
     <div
@@ -83,13 +95,13 @@ export default function CustomDrawer() {
           </ListItemIcon>
           <ListItemText primary={"Habits"} />
         </ListItem>
-        <ListItem button key={"Quests"} onClick={pushToHabits}>
+        <ListItem button key={"Quests"} onClick={pushToQuests}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary={"Quests"} />
         </ListItem>
-        <ListItem button key={"Profile"} onClick={pushToHabits}>
+        <ListItem button key={"Profile"} onClick={pushToProfile}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
@@ -98,7 +110,7 @@ export default function CustomDrawer() {
       </List>
       <Divider />
       <List>
-        <ListItem button key={"Logout"}>
+        <ListItem button key={"Logout"} onClick={logoutUser}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
