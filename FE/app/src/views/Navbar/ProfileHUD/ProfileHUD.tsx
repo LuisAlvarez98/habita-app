@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
+import { User } from "../../Interfaces/interfaces";
 const AvatarImage = styled.img`
   width: 44px;
   height: 44px;
@@ -45,14 +46,19 @@ const BarText = styled.p`
   font-size: 12px;
   text-align: right;
 `;
-const ProfileHUD = () => {
+interface ProfileHUDProps {
+  user: User;
+}
+const ProfileHUD = (props: ProfileHUDProps) => {
+  const { fullName, level, coins } = props.user;
+
   return (
     <Container>
       <AvatarImage src="https://www.abeautifulsite.net/uploads/2014/08/bit-face.png" />
       <div>
-        <ProfileInfoItem>Luis Felipe Alvarez Sanchez</ProfileInfoItem>
-        <ProfileInfoItem>Level 15</ProfileInfoItem>
-        <ProfileInfoItem>100 coins</ProfileInfoItem>
+        <ProfileInfoItem>{fullName}</ProfileInfoItem>
+        <ProfileInfoItem>Level {level}</ProfileInfoItem>
+        <ProfileInfoItem>{coins} coins</ProfileInfoItem>
       </div>
       <div style={{ marginLeft: "3em" }}>
         <Grid container spacing={0}>

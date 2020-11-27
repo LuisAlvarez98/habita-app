@@ -6,5 +6,6 @@ const router = express.Router();
 const jsonParser = bodyParser.json();
 
 router.get("/api/user/me", jsonParser, UserController.me);
+router.get("/api/user/info/:id", jsonParser, UserController.getUserInfo);
 
 module.exports = router;
