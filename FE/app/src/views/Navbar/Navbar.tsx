@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { User } from "../Interfaces/interfaces";
+import CustomDrawer from "./CustomDrawer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,36 +70,31 @@ const Navbar = () => {
   };
   // this function obtains the userId with the token.
   const me = async () => {
-    const accessToken = localStorage
-      .getItem("accessToken")!
-      .replace(/['"]+/g, "");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-    axios
-      .get("http://localhost:8080/api/user/me", config)
-      .then((response) => {
-        getUserInfo(response.data._id);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (localStorage.getItem("accessToken") !== null) {
+      const accessToken = localStorage
+        .getItem("accessToken")!
+        .replace(/['"]+/g, "");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+      axios
+        .get("http://localhost:8080/api/user/me", config)
+        .then((response) => {
+          getUserInfo(response.data._id);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
   return (
     <div className={classes.root}>
       {localStorage.getItem("accessToken") ? (
         <CustomNavbar elevation={0} position="static">
           <Toolbar variant="dense">
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
+            <CustomDrawer />
             <ProfileHUD user={user} />
             <LogoImage src={Logo}></LogoImage>
           </Toolbar>
