@@ -1,10 +1,18 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user");
 const generateToken = require("../utils/generateToken");
+const ProfileModel = require("../models/profile");
 
 exports.register = async (req, res) => {
   const values = req.body;
-  const newUser = new UserModel(values);
+
+  const userBody = {
+    email: values.email,
+    password: values.password,
+  };
+
+  const newUser = new UserModel(userBody);
+  const id = newUser._id;
 
   try {
     await newUser.save();
@@ -12,8 +20,23 @@ exports.register = async (req, res) => {
     res.statusMessage = "Error registering new user";
     return res.status(400).end();
   }
+  // when the user is created we now create the profile
+  console.log(values);
+  const profileBody = {
+    fullName: values.fullName,
+    user: id,
+  };
 
-  return res.status(200).json(newUser);
+  const newProfile = new ProfileModel(profileBody);
+  try {
+    await newProfile.save();
+  } catch (e) {
+    console.log(e);
+    res.statusMessage = "Error registering new profile";
+    return res.status(400).end();
+  }
+
+  return res.status(200).json(newProfile);
 };
 
 exports.login = async (req, res) => {

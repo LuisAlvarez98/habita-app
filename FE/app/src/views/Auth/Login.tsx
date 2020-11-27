@@ -3,12 +3,9 @@ import { Button, TextField } from "@material-ui/core";
 import styled from "styled-components";
 import axios from "axios";
 import { useLocalStorage } from "use-hooks";
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  makeStyles,
-} from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 
 const theme = createMuiTheme({
   palette: {
@@ -50,15 +47,23 @@ const Login = () => {
     "accessToken",
     ""
   );
+
   const [refreshToken, setRefreshToken] = useLocalStorage<string>(
     "refreshToken",
     ""
   );
 
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      history.push("/dashboard");
+    } else {
+      console.log("No access token");
+    }
+  }, []);
+
   function pushRegister() {
     history.push("/register");
   }
-
   const handleLogin = async () => {
     const res = await axios
       .post("http://localhost:8080/api/user/login", {
@@ -70,12 +75,17 @@ const Login = () => {
           const { accessToken, refreshToken } = res.data;
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
+          pushDashboard();
         }
       })
       .catch((err) => {
         if (err.response.status === 404) console.log("Incorrect email");
         if (err.response.status === 400) console.log("Incorrect password");
       });
+  };
+
+  const pushDashboard = () => {
+    history.push("/dashboard");
   };
 
   return (

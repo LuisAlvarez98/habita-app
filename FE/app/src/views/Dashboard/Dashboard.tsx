@@ -48,9 +48,7 @@ const mockDataFriends = [
 ];
 
 const Dashboard = () => {
-  useEffect(() => {
-    console.log(localStorage.getItem("accessToken"));
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <MainContainer>
@@ -59,12 +57,16 @@ const Dashboard = () => {
           <Container>
             <Title>Habits</Title>
             <Subtitle>Daily</Subtitle>
-            {mockDataHabits.map((item) => {
-              return <HabitItem title={item.title} coins={item.coins} />;
+            {mockDataHabits.map((item, index) => {
+              return (
+                <HabitItem key={index} title={item.title} coins={item.coins} />
+              );
             })}
             <Subtitle>Weekly</Subtitle>
-            {mockDataHabits.map((item) => {
-              return <HabitItem title={item.title} coins={item.coins} />;
+            {mockDataHabits.map((item, index) => {
+              return (
+                <HabitItem key={index} title={item.title} coins={item.coins} />
+              );
             })}
             <Button
               variant="contained"
@@ -86,8 +88,10 @@ const Dashboard = () => {
         <Grid item xs={12} md={4} lg={4}>
           <Container>
             <Title>Quests</Title>
-            {mockDataHabits.map((item) => {
-              return <HabitItem title={item.title} coins={item.coins} />;
+            {mockDataHabits.map((item, index) => {
+              return (
+                <HabitItem key={index} title={item.title} coins={item.coins} />
+              );
             })}
 
             <Button
@@ -110,8 +114,10 @@ const Dashboard = () => {
         <Grid item xs={12} md={4} lg={4}>
           <Container>
             <Title>Friends</Title>
-            {mockDataFriends.map((item) => {
-              return <FriendItem image={item.image} name={item.name} />;
+            {mockDataFriends.map((item, index) => {
+              return (
+                <FriendItem key={index} image={item.image} name={item.name} />
+              );
             })}
 
             <Button
@@ -130,8 +136,10 @@ const Dashboard = () => {
               See more
             </Button>
             <Title>Group quests</Title>
-            {mockDataHabits.map((item) => {
-              return <HabitItem title={item.title} coins={item.coins} />;
+            {mockDataHabits.map((item, index) => {
+              return (
+                <HabitItem key={index} title={item.title} coins={item.coins} />
+              );
             })}
           </Container>
         </Grid>
