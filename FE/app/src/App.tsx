@@ -12,6 +12,8 @@ import Navbar from "./views/Navbar/Navbar";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import ErrorComponent from "./views/ErrorComponent/ErrorComponent";
 import Profile from "./views/Profile/Profile";
+import HabitView from "./views/Dashboard/Habit/HabitView";
+
 
 function App() {
   const customHistory = createBrowserHistory();
@@ -51,12 +53,11 @@ function App() {
                 component={Dashboard}
                 path="/dashboard"
               ></PrivateRoute>
-              
               <PrivateRoute
                 component={Profile}
                 path="/profile"
               ></PrivateRoute>
-
+              <PrivateRoute component={HabitView} path="/habits"></PrivateRoute>
               <Route path="*" exact={true} component={ErrorComponent} />
             </Switch>
           </div>
