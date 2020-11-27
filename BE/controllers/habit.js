@@ -9,7 +9,7 @@ exports.createHabit = async (req, res) => {
   try {
     await newHabit.save();
   } catch (e) {
-    res.statusMessage = "Error registering new user";
+    res.statusMessage = "Error registering new habit";
     return res.status(400).end();
   }
   return res.status(200).json(newHabit);
