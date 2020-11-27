@@ -1,7 +1,8 @@
+const { json } = require("express");
 const jwt = require("jsonwebtoken");
 const ProfileModel = require("../models/profile");
 
-exports.me = function (req, res) {
+exports.me = (req, res) => {
   if (req.headers && req.headers.authorization) {
     var authorization = req.headers.authorization.split(" ")[1],
       decoded;
@@ -13,4 +14,14 @@ exports.me = function (req, res) {
     }
   }
   return res.status(404).json({ message: "User not found." });
+};
+
+exports.getUserInfo = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await ProfileModel.find({ user: id });
+    return res.status(200).json(user);
+  } catch (e) {
+    return res.status(404).json({ message: "No habits found for this user." });
+  }
 };

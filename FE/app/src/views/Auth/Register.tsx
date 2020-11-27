@@ -176,6 +176,7 @@ const Register = () => {
                     borderRadius: 35,
                     padding: "14px 18px",
                     fontSize: "16px",
+                    color: "white",
                     fontWeight: "bold",
                     width: "150px",
                   }}
