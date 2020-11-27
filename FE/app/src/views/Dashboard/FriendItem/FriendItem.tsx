@@ -16,17 +16,6 @@ const Cell = styled.div`
     background-color: grey;
   }
 `;
-
-const CheckButton = styled.div`
-  background-color: white;
-  height: 24px;
-  width: 24px;
-  border-radius: 16px;
-  &:hover {
-    background-color: red;
-  }
-`;
-
 const AvatarImage = styled.img`
   width: 24px;
   height: 24px;

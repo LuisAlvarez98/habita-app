@@ -1,11 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  makeStyles,
-} from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 
 const Title = styled.h1`
@@ -34,6 +30,14 @@ const theme = createMuiTheme({
 
 const Home = () => {
   let history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      history.push("/dashboard");
+    } else {
+      console.log("No access token");
+    }
+  }, []);
 
   const pushRegister = () => {
     history.push("/register");

@@ -10,6 +10,7 @@ import Dashboard from "./views/Dashboard/Dashboard";
 import Background from "./img/bg-img.jpg";
 import Navbar from "./views/Navbar/Navbar";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import ErrorComponent from "./views/ErrorComponent/ErrorComponent";
 
 function App() {
   const customHistory = createBrowserHistory();
@@ -28,8 +29,8 @@ function App() {
     >
       <header className="App-header">
         {/*This navbar must be modified for private routes and not private routes*/}
-        <Navbar />
         <Router history={customHistory}>
+          <Navbar />
           <div>
             <Switch>
               <Route exact path="/">
@@ -44,8 +45,12 @@ function App() {
               <Route path="/register">
                 <Register />
               </Route>
-              <PrivateRoute component={Dashboard} path="/dashboard">
-              </PrivateRoute>
+
+              <PrivateRoute
+                component={Dashboard}
+                path="/dashboard"
+              ></PrivateRoute>
+              <Route path="*" exact={true} component={ErrorComponent} />
             </Switch>
           </div>
         </Router>
