@@ -8,13 +8,21 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import Dashboard from "@material-ui/icons/AccountBalance";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 import styled from "styled-components";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
-
+import FaceIcon from "@material-ui/icons/Face";
+import Logout from "@material-ui/icons/MeetingRoom";
+import Quests from "@material-ui/icons/ContactSupport";
+import { User } from "../Interfaces/interfaces";
+const AvatarImage = styled.img`
+  width: 64px;
+  height: 64px;
+  border-radius: 30px;
+`;
 const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
@@ -30,10 +38,16 @@ const useStyles = makeStyles((theme) => ({
 const DrawerContainer = styled(Drawer)`
   .MuiPaper-root {
     width: 300px;
+    background-color: #32343f;
+    color: white;
   }
 `;
 
-export default function CustomDrawer() {
+interface DrawerProps {
+  user: User;
+}
+
+const CustomDrawer = (props: DrawerProps) => {
   let history = useHistory();
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -87,28 +101,41 @@ export default function CustomDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      <div
+        style={{
+          textAlign: "center",
+          backgroundColor: "#3b3d44",
+          paddingTop: "10px",
+          paddingBottom: "10px",
+        }}
+      >
+        <AvatarImage src="https://www.abeautifulsite.net/uploads/2014/08/bit-face.png" />
+        <h3>{props.user.fullName}</h3>
+        <p>Level {props.user.level}</p>
+      </div>
+
       <List>
         <ListItem button key={"Dashboard"} onClick={pushToDashboard}>
           <ListItemIcon>
-            <InboxIcon />
+            <Dashboard style={{ color: "white" }} />
           </ListItemIcon>
           <ListItemText primary={"Dashboard"} />
         </ListItem>
         <ListItem button key={"Habits"} onClick={pushToHabits}>
           <ListItemIcon>
-            <InboxIcon />
+            <AssignmentIcon style={{ color: "white" }} />
           </ListItemIcon>
           <ListItemText primary={"Habits"} />
         </ListItem>
         <ListItem button key={"Quests"} onClick={pushToQuests}>
           <ListItemIcon>
-            <InboxIcon />
+            <Quests style={{ color: "white" }} />
           </ListItemIcon>
           <ListItemText primary={"Quests"} />
         </ListItem>
         <ListItem button key={"Profile"} onClick={pushToProfile}>
           <ListItemIcon>
-            <InboxIcon />
+            <FaceIcon style={{ color: "white" }} />
           </ListItemIcon>
           <ListItemText primary={"Profile"} />
         </ListItem>
@@ -117,7 +144,7 @@ export default function CustomDrawer() {
       <List>
         <ListItem button key={"Logout"} onClick={logoutUser}>
           <ListItemIcon>
-            <InboxIcon />
+            <Logout style={{ color: "white" }} />
           </ListItemIcon>
           <ListItemText primary={"Logout"} />
         </ListItem>
@@ -147,4 +174,6 @@ export default function CustomDrawer() {
       </React.Fragment>
     </div>
   );
-}
+};
+
+export default CustomDrawer;

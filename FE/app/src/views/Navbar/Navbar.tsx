@@ -94,7 +94,7 @@ const Navbar = () => {
       {localStorage.getItem("accessToken") ? (
         <CustomNavbar elevation={0} position="static">
           <Toolbar variant="dense">
-            <CustomDrawer />
+            <CustomDrawer user={user} />
             <ProfileHUD user={user} />
             <LogoImage src={Logo}></LogoImage>
           </Toolbar>
