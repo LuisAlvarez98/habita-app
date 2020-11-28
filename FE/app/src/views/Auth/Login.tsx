@@ -56,6 +56,7 @@ const Login = () => {
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       history.push("/dashboard");
+      window.location.reload();
     } else {
       console.log("No access token");
     }
@@ -76,6 +77,7 @@ const Login = () => {
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
           pushDashboard();
+          window.location.reload();
         }
       })
       .catch((err) => {
