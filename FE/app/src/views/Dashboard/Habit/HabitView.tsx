@@ -242,6 +242,7 @@ const HabitView = () => {
           if (res.status === 200) {
             console.log(res);
             handleClose();
+            window.location.reload();
           }
         })
         .catch((err) => {

@@ -101,6 +101,7 @@ const Register = () => {
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
           pushDashboard();
+          window.location.reload();
         }
       })
       .catch((err) => {
