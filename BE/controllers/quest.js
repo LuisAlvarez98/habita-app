@@ -6,7 +6,6 @@ const ProfileModel = require("../models/profile");
 
 const quests = [
   {
-    _id: 1,
     taskType: "Mindfulness",
     status: "Not completed",
     title: "Quest 1",
@@ -18,7 +17,6 @@ const quests = [
     fequencyDescription: "weekly",
   },
   {
-    _id: 2,
     taskType: "Mindfulness",
     status: "Not completed",
     title: "Quest 2",
@@ -30,7 +28,6 @@ const quests = [
     fequencyDescription: "weekly",
   },
   {
-    _id: 3,
     taskType: "Mindfulness",
     status: "Not completed",
     title: "Quest 3",
@@ -42,7 +39,6 @@ const quests = [
     fequencyDescription: "weekly",
   },
   {
-    _id: 4,
     taskType: "Mindfulness",
     status: "Not completed",
     title: "Quest 4",
@@ -54,7 +50,6 @@ const quests = [
     fequencyDescription: "weekly",
   },
   {
-    _id: 5,
     taskType: "Mindfulness",
     status: "Not completed",
     title: "Quest 5",
@@ -66,7 +61,6 @@ const quests = [
     fequencyDescription: "weekly",
   },
   {
-    _id: 6,
     taskType: "Mindfulness",
     status: "Not completed",
     title: "Quest 6",
@@ -78,7 +72,6 @@ const quests = [
     fequencyDescription: "weekly",
   },
   {
-    _id: 7,
     taskType: "Mindfulness",
     status: "Not completed",
     title: "Quest 7",
@@ -91,32 +84,15 @@ const quests = [
   },
 ];
 
-let selectedQuests = [
-  {
-    _id: 1,
-    taskType: "Mindfulness",
-    status: "Not completed",
-    title: "Quest 1",
-    description: "12",
-    coins: 100,
-    duration: "120",
-    startDate: "2020-11-28T04:46:24.852Z",
-    endDate: "2020-11-28T04:46:24.852Z",
-    fequencyDescription: "weekly",
-  },
-  {
-    _id: 2,
-    taskType: "Mindfulness",
-    status: "Not completed",
-    title: "Quest 2",
-    description: "12",
-    coins: 100,
-    duration: "120",
-    startDate: "2020-11-28T04:46:24.852Z",
-    endDate: "2020-11-28T04:46:24.852Z",
-    fequencyDescription: "weekly",
-  },
-];
+let selectedQuests = [{}];
+
+exports.createQuests = async (req, res) => {
+  QuestModel.deleteAll({});
+  quests.forEach((item) => {
+    const newQuest = new QuestModel(item);
+    newQuest.save();
+  });
+};
 
 exports.getQuests = async (req, res) => {
   try {
@@ -150,18 +126,21 @@ exports.completeQuest = async (req, res) =>{
 }
 
 exports.setNewQuests = async (req, res) => {
-  console.log("Quests changed");
-  let newQuests = [];
-  let questOne = quests[Math.floor(Math.random() * quests.length)];
-  let questTwo = quests[Math.floor(Math.random() * quests.length)];
+  QuestModel.find({}, function (err, quests) {
+    const questsList = quests;
+    let newQuests = [];
 
-  while (questOne._id === questTwo._id) {
-    questOne = quests[Math.floor(Math.random() * quests.length)];
-    console.log("Quest is the same");
-  }
+    let questOne = questsList[Math.floor(Math.random() * questsList.length)];
+    let questTwo = questsList[Math.floor(Math.random() * questsList.length)];
 
-  newQuests.push(questOne);
-  newQuests.push(questTwo);
-  selectedQuests = newQuests;
+    while (questOne._id === questTwo._id) {
+      questOne = questsList[Math.floor(Math.random() * questsList.length)];
+      console.log("Quest is the same");
+    }
+
+    newQuests.push(questOne);
+    newQuests.push(questTwo);
+    selectedQuests = newQuests;
+  });
 };
 
