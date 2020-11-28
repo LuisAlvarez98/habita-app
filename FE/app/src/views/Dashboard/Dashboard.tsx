@@ -6,7 +6,7 @@ import FriendItem from "./FriendItem/FriendItem";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Habit } from "../Interfaces/interfaces";
+import { Habit, Quest } from "../Interfaces/interfaces";
 
 const MainContainer = styled.div`
   display: flex;
@@ -34,26 +34,12 @@ const Subtitle = styled.h2`
   text-align: left;
 `;
 
-const mockDataHabits = [
-  { habitId: 1, title: "Habit 1", coins: 200 },
-  { habitId: 2, title: "Habit 2", coins: 250 },
-];
-
-const mockDataFriends = [
-  {
-    image: "https://www.abeautifulsite.net/uploads/2014/08/bit-face.png",
-    name: "Luis Alvarez",
-  },
-  {
-    image: "https://www.abeautifulsite.net/uploads/2014/08/bit-face.png",
-    name: "David Cantu",
-  },
-];
-
 const Dashboard = () => {
   let history = useHistory();
   const [userId, setUserId] = React.useState("");
   const [habits, setHabits] = React.useState<Habit[]>([]);
+  const [quests, setQuests] = React.useState<Quest[]>([]);
+
   useEffect(() => {
     const accessToken = localStorage
       .getItem("accessToken")!
@@ -67,6 +53,7 @@ const Dashboard = () => {
       .get("http://localhost:8080/api/user/me", config)
       .then((response) => {
         getHabits(response.data._id);
+        getQuests();
         setUserId(response.data._id);
       })
       .catch((e) => {
@@ -78,6 +65,17 @@ const Dashboard = () => {
       .get(`http://localhost:8080/api/habits/${userId}`)
       .then((response) => {
         setHabits(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const getQuests = () => {
+    axios
+      .get(`http://localhost:8080/api/quests/`)
+      .then((response) => {
+        setQuests(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -160,12 +158,16 @@ const Dashboard = () => {
         <Grid item xs={12} md={6} lg={6}>
           <Container>
             <Title>Quests</Title>
-            {/* {mockDataHabits.map((item, index) => {
+            {quests.slice(0, 2).map((item, index) => {
               return (
-                <HabitItem key={index} title={item.title} coins={item.coins} _id={item./>
+                <HabitItem
+                  key={index}
+                  title={item.title}
+                  coins={item.coins}
+                  _id={item._id}
+                />
               );
-            })} */}
-
+            })}
             <Button
               variant="contained"
               style={{

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import HabitDone from "./HabitDone"
+import HabitDone from "./HabitDone";
 
 const MainContainer = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const MainContainer = styled.div`
   align-content: center;
   height: 100vh;
   width: 100vw;
-  background-color: rgba(50, 51, 63,1);
+  background-color: rgba(50, 51, 63, 1);
 `;
 
 const Container = styled.div`
@@ -38,7 +38,7 @@ const LogoImage = styled.img`
 const Box = styled.div`
   width: 40vw;
   height: 30vh;
-  background-color: rgba(67, 68, 74,1);
+  background-color: rgba(67, 68, 74, 1);
   border-radius: 32px;
   height: auto;
   margin: 5px;
@@ -46,24 +46,19 @@ const Box = styled.div`
   text-align: center;
 `;
 
-
 const mockDataHabits = [
   { habitId: 1, title: "Habit 1", coins: 200 },
   { habitId: 2, title: "Habit 2", coins: 250 },
 ];
 
-const mockDataUser = 
-  {
-    image: "https://www.abeautifulsite.net/uploads/2014/08/bit-face.png",
-    name: "Luis Alvarez",
-  }
-;
-
+const mockDataUser = {
+  image: "https://www.abeautifulsite.net/uploads/2014/08/bit-face.png",
+  name: "Luis Alvarez",
+};
 const Profile = () => {
   useEffect(() => {}, []);
 
   return (
-    
     <MainContainer>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4} lg={4}>
@@ -87,20 +82,29 @@ const Profile = () => {
             </Button>
           </Container>
         </Grid>
-          <Grid item xs={12} md={8} lg={8}>
-            <Container>
-              <Title>Habits</Title>
-              <Grid container direction="column" justify="center" alignItems="center" >
+        <Grid item xs={12} md={8} lg={8}>
+          <Container>
+            <Title>Completed habits</Title>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
               <Box>
-              {mockDataHabits.map((item, index) => {
-              return (
-                <HabitDone key={index} title={item.title} coins={item.coins} />
-              );
-            })}
+                {mockDataHabits.map((item, index) => {
+                  return (
+                    <HabitDone
+                      key={index}
+                      title={item.title}
+                      coins={item.coins}
+                    />
+                  );
+                })}
               </Box>
-              </Grid>
-            </Container>
-          </Grid>
+            </Grid>
+          </Container>
+        </Grid>
       </Grid>
     </MainContainer>
   );

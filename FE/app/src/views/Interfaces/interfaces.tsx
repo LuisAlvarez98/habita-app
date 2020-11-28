@@ -7,6 +7,14 @@ export interface Habit {
   fequencyDescription: string;
 }
 
+export interface Quest {
+  title: string;
+  description: string;
+  duration?: string;
+  coins: number;
+  _id: string;
+}
+
 export interface User {
   coins: number;
   experience: number;
