@@ -87,7 +87,7 @@ const quests = [
 let selectedQuests = [{}];
 
 exports.createQuests = async (req, res) => {
-  QuestModel.deleteAll({});
+  //QuestModel.deleteAll({});
   quests.forEach((item) => {
     const newQuest = new QuestModel(item);
     newQuest.save();

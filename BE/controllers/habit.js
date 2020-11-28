@@ -68,11 +68,17 @@ exports.completeHabit = async (req, res) => {
     habit.status = "Not completed";
     let UId = habit.userId;
     let user = await ProfileModel.findOne({user: UId}).exec();
+    user.experience -= habit.exp;
+    user.coins -= habit.coins;
+    const userwithcoins = await ProfileModel.updateOne({user: UId}, user);
     const newProfile = await ProfileModel.updateOne({user: UId}, {$pull:{completedHabits:{_id:habit._id}}}, { multi: true });
   } else {
     habit.status = "Completed";
     let UId = habit.userId;
     let user = await ProfileModel.findOne({user: UId}).exec();
+    user.experience += habit.exp;
+    user.coins += habit.coins;
+    const userwithcoins = await ProfileModel.updateOne({user: UId}, user);
     const newProfile = await ProfileModel.updateOne({user: UId},{$push:{completedHabits: habit}});
   }
 
