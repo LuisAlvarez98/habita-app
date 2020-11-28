@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const HabitModel = require("../models/habit");
 const ProfileModel = require("../models/profile");
 
+const MULT_EXP = 1.2;
+const MULT_COINS = 0.8;
+
 exports.createHabit = async (req, res) => {
   const values = req.body;
   console.log(values.frequency);
@@ -11,6 +14,13 @@ exports.createHabit = async (req, res) => {
   } else {
     values.fequencyDescription = "weekly";
   }
+
+  const coins = calculateCoins(values.duration);
+  const exp = calculateExp(values.duration);
+
+  values.coins = coins;
+  values.exp = exp;
+  console.log(values);
   const newHabit = new HabitModel(values);
   try {
     await newHabit.save();
@@ -19,6 +29,16 @@ exports.createHabit = async (req, res) => {
     return res.status(400).end();
   }
   return res.status(200).json(newHabit);
+};
+
+const calculateCoins = (duration) => {
+  const durationNum = parseInt(duration);
+
+  return MULT_COINS * durationNum;
+};
+const calculateExp = (duration) => {
+  const durationNum = parseInt(duration);
+  return MULT_EXP * durationNum;
 };
 
 exports.getHabits = async (req, res) => {
@@ -67,13 +87,20 @@ exports.completeHabit = async (req, res) => {
   if (habit.status === "Completed") {
     habit.status = "Not completed";
     let UId = habit.userId;
-    let user = await ProfileModel.findOne({user: UId}).exec();
-    const newProfile = await ProfileModel.updateOne({user: UId}, {$pull:{completedHabits:{_id:habit._id}}}, { multi: true });
+    let user = await ProfileModel.findOne({ user: UId }).exec();
+    const newProfile = await ProfileModel.updateOne(
+      { user: UId },
+      { $pull: { completedHabits: { _id: habit._id } } },
+      { multi: true }
+    );
   } else {
     habit.status = "Completed";
     let UId = habit.userId;
-    let user = await ProfileModel.findOne({user: UId}).exec();
-    const newProfile = await ProfileModel.updateOne({user: UId},{$push:{completedHabits: habit}});
+    let user = await ProfileModel.findOne({ user: UId }).exec();
+    const newProfile = await ProfileModel.updateOne(
+      { user: UId },
+      { $push: { completedHabits: habit } }
+    );
   }
 
   const newHabit = await HabitModel.updateOne({ _id: id }, habit);
