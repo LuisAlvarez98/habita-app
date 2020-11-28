@@ -41,6 +41,7 @@ const Home = () => {
 
   const pushRegister = () => {
     history.push("/register");
+    window.location.reload();
   };
   return (
     <MuiThemeProvider theme={theme}>

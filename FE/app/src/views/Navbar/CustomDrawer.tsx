@@ -56,24 +56,29 @@ export default function CustomDrawer() {
 
   const pushToHabits = () => {
     history.push("/habits");
+    window.location.reload();
   };
 
   const pushToDashboard = () => {
     history.push("/dashboard");
+    window.location.reload();
   };
 
   const pushToQuests = () => {
     history.push("/quests");
+    window.location.reload();
   };
 
   const pushToProfile = () => {
     history.push("/profile");
+    window.location.reload();
   };
 
   const logoutUser = () => {
     localStorage.setItem("accessToken", "");
     localStorage.setItem("refreshToken", "");
     history.push("/");
+    window.location.reload();
   };
 
   const list = (anchor: string) => (
