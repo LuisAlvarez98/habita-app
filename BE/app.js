@@ -35,7 +35,7 @@ app.use(userRoutes);
 app.use(questRoutes);
 
 // Function to create quests TO DO
-//QuestController.createQuests();
+QuestController.createQuests();
 QuestController.setNewQuests();
 
 app.get("/", function (req, res) {

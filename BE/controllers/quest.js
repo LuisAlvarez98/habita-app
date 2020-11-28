@@ -102,45 +102,50 @@ exports.getQuests = async (req, res) => {
   }
 };
 
-
-exports.completeQuest = async (req, res) =>{
+exports.completeQuest = async (req, res) => {
   let { questID, UId } = req.params;
   let quest = await QuestModel.findById(questID);
-  if(quest == null)
+  if (quest == null)
     return res.status(404).json({ message: "Quest not found." });
-  
-  if(quest.status === "Completed"){
+
+  if (quest.status === "Completed") {
     quest.status = "Not completed";
-    let user = await ProfileModel.findOne({user: UId}).exec();
-    const newProfile = await ProfileModel.updateOne({user: UId}, {$pull:{completedQuests:{_id:quest._id}}}, { multi: true });
-  }
-  else{
+    let user = await ProfileModel.findOne({ user: UId }).exec();
+    const newProfile = await ProfileModel.updateOne(
+      { user: UId },
+      { $pull: { completedQuests: { _id: quest._id } } },
+      { multi: true }
+    );
+  } else {
     quest.status = "Completed";
-    let user = await ProfileModel.findOne({user: UId}).exec();
-    const newProfile = await ProfileModel.updateOne({user: UId}, {$push:{completedQuests: quest}});
+    let user = await ProfileModel.findOne({ user: UId }).exec();
+    const newProfile = await ProfileModel.updateOne(
+      { user: UId },
+      { $push: { completedQuests: quest } }
+    );
   }
 
-  const newQuest = await QuestModel.updateOne({_id: questID}, quest);
+  const newQuest = await QuestModel.updateOne({ _id: questID }, quest);
   return res.status(200).json({ message: "Quest status changed." });
-
-}
+};
 
 exports.setNewQuests = async (req, res) => {
   QuestModel.find({}, function (err, quests) {
     const questsList = quests;
     let newQuests = [];
 
-    let questOne = questsList[Math.floor(Math.random() * questsList.length)];
-    let questTwo = questsList[Math.floor(Math.random() * questsList.length)];
+    if (questsList.length != 0) {
+      let questOne = questsList[Math.floor(Math.random() * questsList.length)];
+      let questTwo = questsList[Math.floor(Math.random() * questsList.length)];
 
-    while (questOne._id === questTwo._id) {
-      questOne = questsList[Math.floor(Math.random() * questsList.length)];
-      console.log("Quest is the same");
+      while (questOne._id === questTwo._id) {
+        questOne = questsList[Math.floor(Math.random() * questsList.length)];
+        console.log("Quest is the same");
+      }
+
+      newQuests.push(questOne);
+      newQuests.push(questTwo);
+      selectedQuests = newQuests;
     }
-
-    newQuests.push(questOne);
-    newQuests.push(questTwo);
-    selectedQuests = newQuests;
   });
 };
-
