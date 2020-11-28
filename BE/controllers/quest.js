@@ -109,7 +109,7 @@ exports.completeQuest = async (req, res) => {
     return res.status(404).json({ message: "Quest not found." });
 
   if (quest.status === "Completed") {
-    quest.status = "Not completed";
+    //quest.status = "Not completed";
     let user = await ProfileModel.findOne({ user: userID }).exec();
     user.experience -= quest.exp;
     user.coins -= quest.coins;
@@ -120,7 +120,7 @@ exports.completeQuest = async (req, res) => {
       { multi: true }
     );
   } else {
-    quest.status = "Completed";
+    //quest.status = "Completed";
     let user = await ProfileModel.findOne({ user: userID }).exec();
     user.experience += quest.exp;
     user.coins += quest.coins;
@@ -131,7 +131,7 @@ exports.completeQuest = async (req, res) => {
     );
   }
 
-  const newQuest = await QuestModel.updateOne({ _id: questID }, quest);
+  //const newQuest = await QuestModel.updateOne({ _id: questID }, quest);
   return res.status(200).json({ message: "Quest status changed." });
 };
 
