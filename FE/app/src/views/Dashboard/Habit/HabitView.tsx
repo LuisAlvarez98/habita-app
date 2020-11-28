@@ -268,16 +268,22 @@ const HabitView = () => {
             />
           </div>
           <Scrollbars style={{ height: 300 }}>
-            {getData().map((item, index) => {
-              return (
-                <HabitItem
-                  key={index}
-                  title={item.title}
-                  coins={item.coins}
-                  _id={item._id}
-                />
-              );
-            })}
+            {getData().length > 0 ? (
+              getData().map((item, index) => {
+                return (
+                  <HabitItem
+                    key={index}
+                    title={item.title}
+                    coins={item.coins}
+                    _id={item._id}
+                  />
+                );
+              })
+            ) : (
+              <p style={{ color: "white" }}>
+                No tienes actualmente habitos o no han sido encontrados.
+              </p>
+            )}
           </Scrollbars>
           <Button
             variant="contained"
