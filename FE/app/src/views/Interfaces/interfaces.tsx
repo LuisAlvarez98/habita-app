@@ -3,6 +3,7 @@ export interface Habit {
   description: string;
   duration?: string;
   coins: number;
+  _id: string;
 }
 
 export interface User {

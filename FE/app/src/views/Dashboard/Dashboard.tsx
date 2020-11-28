@@ -57,17 +57,17 @@ const Dashboard = () => {
           <Container>
             <Title>Habits</Title>
             <Subtitle>Daily</Subtitle>
-            {mockDataHabits.map((item, index) => {
+            {/* {mockDataHabits.map((item, index) => {
               return (
                 <HabitItem key={index} title={item.title} coins={item.coins} />
               );
-            })}
+            })} */}
             <Subtitle>Weekly</Subtitle>
-            {mockDataHabits.map((item, index) => {
+            {/* {mockDataHabits.map((item, index) => {
               return (
                 <HabitItem key={index} title={item.title} coins={item.coins} />
               );
-            })}
+            })} */}
             <Button
               variant="contained"
               style={{
@@ -88,11 +88,11 @@ const Dashboard = () => {
         <Grid item xs={12} md={6} lg={6}>
           <Container>
             <Title>Quests</Title>
-            {mockDataHabits.map((item, index) => {
+            {/* {mockDataHabits.map((item, index) => {
               return (
-                <HabitItem key={index} title={item.title} coins={item.coins} />
+                <HabitItem key={index} title={item.title} coins={item.coins} _id={item./>
               );
-            })}
+            })} */}
 
             <Button
               variant="contained"
