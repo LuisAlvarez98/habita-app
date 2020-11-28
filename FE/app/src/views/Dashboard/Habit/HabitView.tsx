@@ -224,7 +224,7 @@ const HabitView = () => {
           <Scrollbars style={{ height: 300 }}>
             {getData().map((item, index) => {
               return (
-                <HabitItem key={index} title={item.title} coins={item.coins} />
+                <HabitItem key={index} title={item.title} coins={item.coins} _id={item._id}/>
               );
             })}
           </Scrollbars>
