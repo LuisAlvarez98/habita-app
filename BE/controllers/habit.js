@@ -4,7 +4,12 @@ const HabitModel = require("../models/habit");
 
 exports.createHabit = async (req, res) => {
   const values = req.body;
-  const newHabit = new HabitModel(values);
+  console.log(values.frequency);
+  if (values.frequency.length >= 5) {
+    values.fequencyDescription = "daily";
+  } else {
+    values.fequencyDescription = "weekly";
+  }
 
   try {
     await newHabit.save();
@@ -52,14 +57,16 @@ exports.updateHabit = async (req, res) => {
   return res.status(200).json({ message: "Habit updated successfully." });
 };
 
-exports.completeHabit = async(req, res) => {
+exports.completeHabit = async (req, res) => {
   let { id } = req.params;
   let habit = await HabitModel.findById(id);
-  if(habit == null)
-    return res.status(404).json({ message: "Habit not found."});
-  
+  if (habit == null)
+    return res.status(404).json({ message: "Habit not found." });
+
   habit.status = "Completed";
-  const newHabit = await HabitModel.updateOne({_id: id}, habit);
-  
-  return res.status(200).json({message: "Habit marked as completed successfully."});
+  const newHabit = await HabitModel.updateOne({ _id: id }, habit);
+
+  return res
+    .status(200)
+    .json({ message: "Habit marked as completed successfully." });
 };

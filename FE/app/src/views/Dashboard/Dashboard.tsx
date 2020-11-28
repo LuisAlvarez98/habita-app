@@ -4,6 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import HabitItem from "./Habit/HabitItem";
 import FriendItem from "./FriendItem/FriendItem";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { Habit } from "../Interfaces/interfaces";
 
 const MainContainer = styled.div`
   display: flex;
@@ -48,7 +51,65 @@ const mockDataFriends = [
 ];
 
 const Dashboard = () => {
-  useEffect(() => {}, []);
+  let history = useHistory();
+  const [userId, setUserId] = React.useState("");
+  const [habits, setHabits] = React.useState<Habit[]>([]);
+  useEffect(() => {
+    const accessToken = localStorage
+      .getItem("accessToken")!
+      .replace(/['"]+/g, "");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    axios
+      .get("http://localhost:8080/api/user/me", config)
+      .then((response) => {
+        getHabits(response.data._id);
+        setUserId(response.data._id);
+      })
+      .catch((e) => {
+        // Capturamos los errores
+      });
+  }, []);
+  const getHabits = (userId: string) => {
+    axios
+      .get(`http://localhost:8080/api/habits/${userId}`)
+      .then((response) => {
+        setHabits(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const pushToHabits = () => {
+    history.push("/habits");
+  };
+
+  const pushToQuests = () => {
+    history.push("/quests");
+  };
+
+  const getDailyHabits = () => {
+    if (habits.length >= 0) {
+      const dailyHabits = habits.filter(
+        (item: Habit) => item.fequencyDescription === "daily"
+      );
+      return dailyHabits.slice(0, 2);
+    }
+    return [];
+  };
+
+  const getWeeklyHabits = () => {
+    if (habits.length >= 0) {
+      const weeklyHabits = habits.filter(
+        (item: Habit) => item.fequencyDescription === "weekly"
+      );
+      return weeklyHabits.slice(0, 2);
+    }
+    return [];
+  };
 
   return (
     <MainContainer>
@@ -57,17 +118,27 @@ const Dashboard = () => {
           <Container>
             <Title>Habits</Title>
             <Subtitle>Daily</Subtitle>
-            {/* {mockDataHabits.map((item, index) => {
+            {getDailyHabits().map((item, index) => {
               return (
-                <HabitItem key={index} title={item.title} coins={item.coins} />
+                <HabitItem
+                  key={index}
+                  title={item.title}
+                  coins={item.coins}
+                  _id={item._id}
+                />
               );
-            })} */}
+            })}
             <Subtitle>Weekly</Subtitle>
-            {/* {mockDataHabits.map((item, index) => {
+            {getWeeklyHabits().map((item, index) => {
               return (
-                <HabitItem key={index} title={item.title} coins={item.coins} />
+                <HabitItem
+                  key={index}
+                  title={item.title}
+                  coins={item.coins}
+                  _id={item._id}
+                />
               );
-            })} */}
+            })}
             <Button
               variant="contained"
               style={{
@@ -80,6 +151,7 @@ const Dashboard = () => {
                 width: "150px",
                 color: "#fff",
               }}
+              onClick={pushToHabits}
             >
               See more
             </Button>
@@ -106,6 +178,7 @@ const Dashboard = () => {
                 width: "150px",
                 color: "#fff",
               }}
+              onClick={pushToQuests}
             >
               See more
             </Button>

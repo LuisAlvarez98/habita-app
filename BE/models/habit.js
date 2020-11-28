@@ -33,6 +33,9 @@ const habitSchema = {
   exp: {
     type: Number,
   },
+  fequencyDescription: {
+    type: String,
+  },
   status: {
     type: String,
     enum: ["Not completed", "Completed"],

@@ -4,6 +4,7 @@ export interface Habit {
   duration?: string;
   coins: number;
   _id: string;
+  fequencyDescription: string;
 }
 
 export interface User {
