@@ -90,11 +90,12 @@ const Dashboard = () => {
   };
 
   const getDailyHabits = () => {
-    if (habits.length >= 0) {
+    if (habits.length > 0) {
       const dailyHabits = habits.filter(
         (item: Habit) => item.fequencyDescription === "daily"
       );
       return dailyHabits.slice(0, 2);
+    } else {
     }
     return [];
   };
@@ -116,27 +117,39 @@ const Dashboard = () => {
           <Container>
             <Title>Habits</Title>
             <Subtitle>Daily</Subtitle>
-            {getDailyHabits().map((item, index) => {
-              return (
-                <HabitItem
-                  key={index}
-                  title={item.title}
-                  coins={item.coins}
-                  _id={item._id}
-                />
-              );
-            })}
+            {getDailyHabits().length > 0 ? (
+              getDailyHabits().map((item, index) => {
+                return (
+                  <HabitItem
+                    key={index}
+                    title={item.title}
+                    coins={item.coins}
+                    _id={item._id}
+                  />
+                );
+              })
+            ) : (
+              <p style={{ color: "white" }}>
+                Actualmente no tienes habitos diarios.
+              </p>
+            )}
             <Subtitle>Weekly</Subtitle>
-            {getWeeklyHabits().map((item, index) => {
-              return (
-                <HabitItem
-                  key={index}
-                  title={item.title}
-                  coins={item.coins}
-                  _id={item._id}
-                />
-              );
-            })}
+            {getWeeklyHabits().length > 0 ? (
+              getWeeklyHabits().map((item, index) => {
+                return (
+                  <HabitItem
+                    key={index}
+                    title={item.title}
+                    coins={item.coins}
+                    _id={item._id}
+                  />
+                );
+              })
+            ) : (
+              <p style={{ color: "white" }}>
+                Actualmente no tienes habitos semanales.
+              </p>
+            )}
             <Button
               variant="contained"
               style={{

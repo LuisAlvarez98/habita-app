@@ -139,8 +139,10 @@ const HabitView = () => {
   const classes = useStyles();
   // alert
   const [openAlert, setOpenAlert] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const accessToken = localStorage
       .getItem("accessToken")!
       .replace(/['"]+/g, "");
@@ -154,6 +156,7 @@ const HabitView = () => {
       .then((response) => {
         getHabits(response.data._id);
         setUserId(response.data._id);
+        setIsLoading(false);
       })
       .catch((e) => {
         // Capturamos los errores
@@ -268,16 +271,24 @@ const HabitView = () => {
             />
           </div>
           <Scrollbars style={{ height: 300 }}>
-            {getData().map((item, index) => {
-              return (
-                <HabitItem
-                  key={index}
-                  title={item.title}
-                  coins={item.coins}
-                  _id={item._id}
-                />
-              );
-            })}
+            {getData().length > 0
+              ? getData().map((item, index) => {
+                  return (
+                    <HabitItem
+                      key={index}
+                      title={item.title}
+                      coins={item.coins}
+                      _id={item._id}
+                    />
+                  );
+                })
+              : [
+                  !isLoading && (
+                    <p style={{ color: "white" }}>
+                      No tienes actualmente habitos o no han sido encontrados.
+                    </p>
+                  ),
+                ]}
           </Scrollbars>
           <Button
             variant="contained"

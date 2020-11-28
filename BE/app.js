@@ -8,6 +8,9 @@ const authRoutes = require("./routes/auth");
 const habitRoutes = require("./routes/habit");
 const userRoutes = require("./routes/user");
 const questRoutes = require("./routes/quest");
+const QuestController = require("./controllers/quest");
+
+const cron = require("node-cron");
 
 /** Setup Mongoose */
 mongoose.connect("mongodb://localhost/habita", {
@@ -52,4 +55,9 @@ db.once("open", () => {
 
 db.on("error", () => {
   console.log("DB connection error");
+});
+
+// Cron job for quests
+cron.schedule("5 * * * * *", () => {
+  QuestController.setNewQuests();
 });
