@@ -103,24 +103,30 @@ exports.getQuests = async (req, res) => {
 };
 
 exports.completeQuest = async (req, res) => {
-  let { questID, UId } = req.params;
+  let { questID, userID } = req.params;
   let quest = await QuestModel.findById(questID);
   if (quest == null)
     return res.status(404).json({ message: "Quest not found." });
 
   if (quest.status === "Completed") {
     quest.status = "Not completed";
-    let user = await ProfileModel.findOne({ user: UId }).exec();
+    let user = await ProfileModel.findOne({ user: userID }).exec();
+    user.experience -= quest.exp;
+    user.coins -= quest.coins;
+    const userwithcoins = await ProfileModel.updateOne({user: userID}, user);
     const newProfile = await ProfileModel.updateOne(
-      { user: UId },
+      { user: userID },
       { $pull: { completedQuests: { _id: quest._id } } },
       { multi: true }
     );
   } else {
     quest.status = "Completed";
-    let user = await ProfileModel.findOne({ user: UId }).exec();
+    let user = await ProfileModel.findOne({ user: userID }).exec();
+    user.experience += quest.exp;
+    user.coins += quest.coins;
+    const userwithcoins = await ProfileModel.updateOne({user: userID}, user);
     const newProfile = await ProfileModel.updateOne(
-      { user: UId },
+      { user: userID },
       { $push: { completedQuests: quest } }
     );
   }
