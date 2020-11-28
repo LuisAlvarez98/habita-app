@@ -63,10 +63,15 @@ exports.completeHabit = async (req, res) => {
   if (habit == null)
     return res.status(404).json({ message: "Habit not found." });
 
-  habit.status = "Completed";
+  if(habit.status === "Completed"){
+    habit.status = "Not completed"
+  }else{
+    habit.status = "Completed";
+  }
+
   const newHabit = await HabitModel.updateOne({ _id: id }, habit);
 
   return res
     .status(200)
-    .json({ message: "Habit marked as completed successfully." });
+    .json({ message: "Habit status changed." });
 };
