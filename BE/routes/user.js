@@ -7,5 +7,6 @@ const jsonParser = bodyParser.json();
 
 router.get("/api/user/me", jsonParser, UserController.me);
 router.get("/api/user/info/:id", jsonParser, UserController.getUserInfo);
+router.put("/api/user/:id", jsonParser, UserController.updateInfo);
 
 module.exports = router;
