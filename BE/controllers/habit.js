@@ -51,3 +51,15 @@ exports.updateHabit = async (req, res) => {
 
   return res.status(200).json({ message: "Habit updated successfully." });
 };
+
+exports.completeHabit = async(req, res) => {
+  let { id } = req.params;
+  let habit = await HabitModel.findById(id);
+  if(habit == null)
+    return res.status(404).json({ message: "Habit not found."});
+  
+  habit.status = "Completed";
+  const newHabit = await HabitModel.updateOne({_id: id}, habit);
+  
+  return res.status(200).json({message: "Habit marked as completed successfully."});
+};
