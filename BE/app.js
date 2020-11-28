@@ -34,6 +34,10 @@ app.use(habitRoutes);
 app.use(userRoutes);
 app.use(questRoutes);
 
+// Function to create quests TO DO
+//QuestController.createQuests();
+QuestController.setNewQuests();
+
 app.get("/", function (req, res) {
   res.send("Welcome to Habita, API working");
 });
