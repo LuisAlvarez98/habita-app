@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Grid from "@material-ui/core/Grid";
 import HabitItem from "./HabitItem";
 import { Scrollbars } from "react-custom-scrollbars";
 import TextField from "@material-ui/core/TextField";
@@ -16,6 +15,10 @@ import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import axios from "axios";
 import { Habit } from "../../Interfaces/interfaces";
+import DatePicker from "react-datepicker";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import "react-datepicker/dist/react-datepicker.css";
 
 const MainContainer = styled.div`
   display: flex;
@@ -53,6 +56,11 @@ const ContainerModal = styled.div`
   text-align: center;
 `;
 
+const DatePickerCustom = styled(DatePicker)`
+  display: unset;
+  width: 100%;
+`;
+
 const FrequencySquare = styled.div`
   height: 24px;
   width: 24px;
@@ -62,9 +70,15 @@ const FrequencySquare = styled.div`
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      width: "100%",
+      "& > * + *": {
+        marginTop: theme.spacing(2),
+      },
+    },
     paper: {
       width: 400,
-      height: 500,
+      height: 525,
       backgroundColor: "rgba(196, 196, 196, 1)",
     },
   })
@@ -95,6 +109,10 @@ const theme = createMuiTheme({
   },
 });
 
+const Alert = (props: AlertProps) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
+
 const frequencies = [
   "Monday",
   "Tuesday",
@@ -116,8 +134,11 @@ const HabitView = () => {
   const [taskType, setTaskType] = React.useState("");
   const [frequency, setFrequency] = React.useState<string[]>([]);
   const [duration, setDuration] = React.useState("");
-
+  const [startDate, setStartDate] = React.useState<Date>(new Date());
+  const [endDate, setEndDate] = React.useState<Date>(new Date());
   const classes = useStyles();
+  // alert
+  const [openAlert, setOpenAlert] = React.useState(false);
 
   useEffect(() => {
     const accessToken = localStorage
@@ -139,6 +160,17 @@ const HabitView = () => {
       });
   }, []);
 
+  const handleClickAlert = () => {
+    setOpenAlert(true);
+  };
+
+  const handleCloseAlert = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
   const getHabits = (userId: string) => {
     axios
       .get(`http://localhost:8080/api/habits/${userId}`)
@@ -187,25 +219,37 @@ const HabitView = () => {
   };
 
   const handleAddHabit = async () => {
-    const res = await axios
-      .post("http://localhost:8080/api/habit", {
-        title,
-        description,
-        taskType,
-        frequency: frequency,
-        coins: 100,
-        userId: userId,
-        duration: duration,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          console.log(res);
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 404) console.log("Incorrect email");
-        if (err.response.status === 400) console.log("Incorrect password");
-      });
+    if (
+      title !== "" &&
+      description !== "" &&
+      taskType !== "" &&
+      frequency.length > 0 &&
+      duration !== ""
+    ) {
+      const res = await axios
+        .post("http://localhost:8080/api/habit", {
+          title,
+          description,
+          taskType,
+          frequency: frequency,
+          coins: 100,
+          userId: userId,
+          duration: duration,
+          startDate,
+          endDate,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res);
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 404) console.log("Incorrect email");
+          if (err.response.status === 400) console.log("Incorrect password");
+        });
+    } else {
+      handleClickAlert();
+    }
   };
   return (
     <MuiThemeProvider theme={theme}>
@@ -318,6 +362,23 @@ const HabitView = () => {
                 </Select>
               </FormControl>
 
+              <div>
+                <p style={{ margin: 0, padding: 0, textAlign: "center" }}>
+                  Start date
+                </p>
+                <DatePickerCustom
+                  selected={startDate}
+                  onChange={(date: Date) => setStartDate(date)}
+                />
+                <p style={{ margin: 0, padding: 0, textAlign: "center" }}>
+                  End date
+                </p>
+                <DatePickerCustom
+                  selected={endDate}
+                  onChange={(date: Date) => setEndDate(date)}
+                />
+              </div>
+
               <Button
                 variant="contained"
                 style={{
@@ -337,6 +398,15 @@ const HabitView = () => {
             </ContainerModal>
           </div>
         </Modal>
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}
+        >
+          <Alert onClose={handleCloseAlert} severity="error">
+            Por favor de ingresar los valores.
+          </Alert>
+        </Snackbar>
       </MainContainer>
     </MuiThemeProvider>
   );
