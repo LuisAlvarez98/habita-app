@@ -53,7 +53,7 @@ const Dashboard = () => {
   return (
     <MainContainer>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={6} lg={6}>
           <Container>
             <Title>Habits</Title>
             <Subtitle>Daily</Subtitle>
@@ -85,7 +85,7 @@ const Dashboard = () => {
             </Button>
           </Container>
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={6} lg={6}>
           <Container>
             <Title>Quests</Title>
             {mockDataHabits.map((item, index) => {
@@ -109,38 +109,6 @@ const Dashboard = () => {
             >
               See more
             </Button>
-          </Container>
-        </Grid>
-        <Grid item xs={12} md={4} lg={4}>
-          <Container>
-            <Title>Friends</Title>
-            {mockDataFriends.map((item, index) => {
-              return (
-                <FriendItem key={index} image={item.image} name={item.name} />
-              );
-            })}
-
-            <Button
-              variant="contained"
-              style={{
-                marginTop: "20px",
-                borderRadius: 35,
-                backgroundColor: "red",
-                padding: "14px 18px",
-                fontSize: "14px",
-                fontWeight: "bold",
-                width: "150px",
-                color: "#fff",
-              }}
-            >
-              See more
-            </Button>
-            <Title>Group quests</Title>
-            {mockDataHabits.map((item, index) => {
-              return (
-                <HabitItem key={index} title={item.title} coins={item.coins} />
-              );
-            })}
           </Container>
         </Grid>
       </Grid>
