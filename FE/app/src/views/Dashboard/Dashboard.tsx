@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import HabitItem from "./Habit/HabitItem";
 import FriendItem from "./FriendItem/FriendItem";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 const MainContainer = styled.div`
   display: flex;
@@ -48,8 +49,15 @@ const mockDataFriends = [
 ];
 
 const Dashboard = () => {
+  let history = useHistory();
   useEffect(() => {}, []);
+  const pushToHabits = () => {
+    history.push("/habits");
+  };
 
+  const pushToQuests = () => {
+    history.push("/quests");
+  };
   return (
     <MainContainer>
       <Grid container spacing={3}>
@@ -80,6 +88,7 @@ const Dashboard = () => {
                 width: "150px",
                 color: "#fff",
               }}
+              onClick={pushToHabits}
             >
               See more
             </Button>
@@ -106,6 +115,7 @@ const Dashboard = () => {
                 width: "150px",
                 color: "#fff",
               }}
+              onClick={pushToQuests}
             >
               See more
             </Button>
