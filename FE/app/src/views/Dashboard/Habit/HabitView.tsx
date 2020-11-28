@@ -241,6 +241,7 @@ const HabitView = () => {
         .then((res) => {
           if (res.status === 200) {
             console.log(res);
+            handleClose();
           }
         })
         .catch((err) => {
@@ -268,7 +269,12 @@ const HabitView = () => {
           <Scrollbars style={{ height: 300 }}>
             {getData().map((item, index) => {
               return (
-                <HabitItem key={index} title={item.title} coins={item.coins} _id={item._id}/>
+                <HabitItem
+                  key={index}
+                  title={item.title}
+                  coins={item.coins}
+                  _id={item._id}
+                />
               );
             })}
           </Scrollbars>
