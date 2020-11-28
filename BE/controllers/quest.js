@@ -2,6 +2,7 @@ const { getFips } = require("crypto");
 const jwt = require("jsonwebtoken");
 const Quest = require("../models/quest");
 const QuestModel = require("../models/quest");
+const ProfileModel = require("../models/profile");
 
 const quests = [
   {
@@ -125,6 +126,29 @@ exports.getQuests = async (req, res) => {
   }
 };
 
+
+exports.completeQuest = async (req, res) =>{
+  let { questID, UId } = req.params;
+  let quest = await QuestModel.findById(questID);
+  if(quest == null)
+    return res.status(404).json({ message: "Quest not found." });
+  
+  if(quest.status === "Completed"){
+    quest.status = "Not completed";
+    let user = await ProfileModel.findOne({user: UId}).exec();
+    const newProfile = await ProfileModel.updateOne({user: UId}, {$pull:{completedQuests:{_id:quest._id}}}, { multi: true });
+  }
+  else{
+    quest.status = "Completed";
+    let user = await ProfileModel.findOne({user: UId}).exec();
+    const newProfile = await ProfileModel.updateOne({user: UId}, {$push:{completedQuests: quest}});
+  }
+
+  const newQuest = await QuestModel.updateOne({_id: questID}, quest);
+  return res.status(200).json({ message: "Quest status changed." });
+
+}
+
 exports.setNewQuests = async (req, res) => {
   console.log("Quests changed");
   let newQuests = [];
@@ -140,3 +164,4 @@ exports.setNewQuests = async (req, res) => {
   newQuests.push(questTwo);
   selectedQuests = newQuests;
 };
+

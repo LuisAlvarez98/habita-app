@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const Habit = require('./habit');
+const Quest = require('./quest');
 
 const profileSchema = mongoose.Schema({
   fullName: {
@@ -26,6 +28,14 @@ const profileSchema = mongoose.Schema({
     required: true,
     unique: 1,
   },
+  completedHabits:{
+    type: Array,
+    default: [],
+  },
+  completedQuests:{
+    type: Array,
+    default: [],
+  }
 });
 
 const Profile = mongoose.model("Profile", profileSchema);
