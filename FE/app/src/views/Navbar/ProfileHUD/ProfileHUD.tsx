@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import { User } from "../../Interfaces/interfaces";
@@ -40,17 +40,29 @@ const ExpBar = styled.div`
   margin-bottom: 5px;
 `;
 
-const BarText = styled.p`
+const BarTextHP = styled.p`
   margin: 0;
   padding: 0;
   font-size: 12px;
   text-align: right;
+  color: green;
+`;
+const BarTextEXP = styled.p`
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  text-align: right;
+  color: red;
 `;
 interface ProfileHUDProps {
   user: User;
 }
 const ProfileHUD = (props: ProfileHUDProps) => {
-  const { fullName, level, coins } = props.user;
+  const { fullName, level, coins, hitpoints, experience } = props.user;
+
+  const getCurrentExpGoal = () => {
+    return level * 300 * 1.2;
+  };
 
   return (
     <Container>
@@ -60,23 +72,21 @@ const ProfileHUD = (props: ProfileHUDProps) => {
         <ProfileInfoItem>Level {level}</ProfileInfoItem>
         <ProfileInfoItem>{coins} coins</ProfileInfoItem>
       </div>
-      <div style={{ marginLeft: "3em" }}>
+      <div>
         <Grid container spacing={0}>
-          <Grid item xs={8}>
-            <HPBar></HPBar>
+          <Grid item xs={6}>
+            <BarTextHP> {hitpoints} </BarTextHP>
           </Grid>
-          <Grid item xs={4}>
-            {" "}
-            <BarText>HP </BarText>
+          <Grid item xs={6}>
+            <BarTextHP>/100HP</BarTextHP>
           </Grid>
         </Grid>
         <Grid container spacing={0}>
-          <Grid item xs={8}>
-            <ExpBar></ExpBar>
+          <Grid item xs={6}>
+            <BarTextEXP>{experience}</BarTextEXP>
           </Grid>
-          <Grid item xs={4}>
-            {" "}
-            <BarText>EXP</BarText>
+          <Grid item xs={6}>
+            <BarTextEXP>/{getCurrentExpGoal()}EXP</BarTextEXP>
           </Grid>
         </Grid>
       </div>

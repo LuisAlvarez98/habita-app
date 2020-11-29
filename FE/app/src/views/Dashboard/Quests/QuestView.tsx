@@ -126,6 +126,7 @@ const HabitView = () => {
                     title={item.title}
                     coins={item.coins}
                     _id={item._id}
+                    status={item.status}
                   />
                 );
               })

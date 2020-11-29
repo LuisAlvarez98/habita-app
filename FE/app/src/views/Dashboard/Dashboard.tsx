@@ -125,6 +125,7 @@ const Dashboard = () => {
                     title={item.title}
                     coins={item.coins}
                     _id={item._id}
+                    status={item.status}
                   />
                 );
               })
@@ -142,6 +143,7 @@ const Dashboard = () => {
                     title={item.title}
                     coins={item.coins}
                     _id={item._id}
+                    status={item.status}
                   />
                 );
               })
@@ -178,6 +180,7 @@ const Dashboard = () => {
                   title={item.title}
                   coins={item.coins}
                   _id={item._id}
+                  status={item.status}
                 />
               );
             })}

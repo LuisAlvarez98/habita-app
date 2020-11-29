@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Coin from "../../../img/coin.png";
+import Checkbox from "@material-ui/core/Checkbox";
 const Cell = styled.div`
   height: 40px;
   width: 100%;
@@ -29,9 +30,21 @@ interface HabitItemProps {
   title: string;
   coins: number;
   _id: string;
+  status: string;
 }
 const HabitItem = (props: HabitItemProps) => {
-  const handleCompleteButton = async () => {
+  const [checked, setChecked] = React.useState(false);
+
+  useEffect(() => {
+    if (props.status === "Completed") {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }, []);
+
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
     const res = await axios
       .put(`http://localhost:8080/api/habit/confirm/${props._id}`, {})
       .then((res) => {
@@ -42,6 +55,7 @@ const HabitItem = (props: HabitItemProps) => {
       .catch((err) => {
         if (err.response.status === 404) console.log("Habit not found");
       });
+    window.location.reload();
   };
 
   return (
@@ -73,7 +87,11 @@ const HabitItem = (props: HabitItemProps) => {
             xs={3}
             style={{ alignSelf: "center", textAlign: "right", color: "white" }}
           >
-            <CheckButton onClick={handleCompleteButton}></CheckButton>
+            <Checkbox
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "primary checkbox" }}
+            />
           </Grid>
         </Grid>
       </Cell>

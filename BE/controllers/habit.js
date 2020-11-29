@@ -8,7 +8,6 @@ const MULT_COINS = 0.8;
 
 exports.createHabit = async (req, res) => {
   const values = req.body;
-  console.log(values.frequency);
   if (values.frequency.length >= 5) {
     values.fequencyDescription = "daily";
   } else {
@@ -20,7 +19,6 @@ exports.createHabit = async (req, res) => {
 
   values.coins = coins;
   values.exp = exp;
-  console.log(values);
   const newHabit = new HabitModel(values);
   try {
     await newHabit.save();
@@ -87,22 +85,44 @@ exports.completeHabit = async (req, res) => {
   if (habit.status === "Completed") {
     habit.status = "Not completed";
     let UId = habit.userId;
-    let user = await ProfileModel.findOne({user: UId}).exec();
+    let user = await ProfileModel.findOne({ user: UId }).exec();
     user.experience -= habit.exp;
     user.coins -= habit.coins;
-    const userwithcoins = await ProfileModel.updateOne({user: UId}, user);
-    const newProfile = await ProfileModel.updateOne({user: UId}, {$pull:{completedHabits:{_id:habit._id}}}, { multi: true });
+
+    if (user.experience < getCurrentExpGoal(user.level)) {
+      user.level -= 1;
+      console.log("leveld down");
+    }
+    const userwithcoins = await ProfileModel.updateOne({ user: UId }, user);
+    const newProfile = await ProfileModel.updateOne(
+      { user: UId },
+      { $pull: { completedHabits: { _id: habit._id } } },
+      { multi: true }
+    );
   } else {
     habit.status = "Completed";
     let UId = habit.userId;
-    let user = await ProfileModel.findOne({user: UId}).exec();
+    let user = await ProfileModel.findOne({ user: UId }).exec();
     user.experience += habit.exp;
     user.coins += habit.coins;
-    const userwithcoins = await ProfileModel.updateOne({user: UId}, user);
-    const newProfile = await ProfileModel.updateOne({user: UId},{$push:{completedHabits: habit}});
+    console.log(user.level);
+    if (user.experience >= getCurrentExpGoal(user.level)) {
+      user.level += 1;
+      console.log("leveld up");
+    }
+
+    const userwithcoins = await ProfileModel.updateOne({ user: UId }, user);
+    const newProfile = await ProfileModel.updateOne(
+      { user: UId },
+      { $push: { completedHabits: habit } }
+    );
   }
 
   const newHabit = await HabitModel.updateOne({ _id: id }, habit);
 
   return res.status(200).json({ message: "Habit status changed." });
+};
+
+const getCurrentExpGoal = (level) => {
+  return level * 300 * 1.2;
 };

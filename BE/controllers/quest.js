@@ -113,7 +113,7 @@ exports.completeQuest = async (req, res) => {
     let user = await ProfileModel.findOne({ user: userID }).exec();
     user.experience -= quest.exp;
     user.coins -= quest.coins;
-    const userwithcoins = await ProfileModel.updateOne({user: userID}, user);
+    const userwithcoins = await ProfileModel.updateOne({ user: userID }, user);
     const newProfile = await ProfileModel.updateOne(
       { user: userID },
       { $pull: { completedQuests: { _id: quest._id } } },
@@ -124,7 +124,7 @@ exports.completeQuest = async (req, res) => {
     let user = await ProfileModel.findOne({ user: userID }).exec();
     user.experience += quest.exp;
     user.coins += quest.coins;
-    const userwithcoins = await ProfileModel.updateOne({user: userID}, user);
+    const userwithcoins = await ProfileModel.updateOne({ user: userID }, user);
     const newProfile = await ProfileModel.updateOne(
       { user: userID },
       { $push: { completedQuests: quest } }

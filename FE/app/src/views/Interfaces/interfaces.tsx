@@ -5,6 +5,7 @@ export interface Habit {
   coins: number;
   _id: string;
   fequencyDescription: string;
+  status: string;
 }
 
 export interface Quest {
@@ -13,6 +14,7 @@ export interface Quest {
   duration?: string;
   coins: number;
   _id: string;
+  status: string;
 }
 
 export interface User {
