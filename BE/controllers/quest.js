@@ -122,6 +122,10 @@ exports.completeQuest = async (req, res) => {
   if (isQuestThere) {
     user.experience -= quest.exp;
     user.coins -= quest.coins;
+    if (user.experience < getCurrentExpGoal(user.level) && user.level > 1) {
+      user.level -= 1;
+      console.log("leveld down");
+    }
     const userwithcoins = await ProfileModel.updateOne({ user: userID }, user);
     const newProfile = await ProfileModel.updateOne(
       { user: userID },
@@ -131,6 +135,10 @@ exports.completeQuest = async (req, res) => {
   } else {
     user.experience += quest.exp;
     user.coins += quest.coins;
+    if (user.experience >= getCurrentExpGoal(user.level)) {
+      user.level += 1;
+      console.log("leveld up");
+    }
     const userwithcoins = await ProfileModel.updateOne({ user: userID }, user);
     const newProfile = await ProfileModel.updateOne(
       { user: userID },
@@ -143,12 +151,15 @@ exports.completeQuest = async (req, res) => {
 };
 
 const findQuest = (questList, id) => {
+  let ans = false;
   questList.forEach((q) => {
-    if (JSON.stringify(q._id) === JSON.stringify(id)) {
-      return true;
+    console.log(id);
+    console.log(q._id.toString());
+    if (q._id.toString() === id) {
+      ans = true;
     }
   });
-  return false;
+  return ans;
 };
 
 exports.setNewQuests = async (req, res) => {
@@ -172,4 +183,8 @@ exports.setNewQuests = async (req, res) => {
       selectedQuests = newQuests;
     }
   });
+};
+
+const getCurrentExpGoal = (level) => {
+  return level * 300 * 1.2;
 };

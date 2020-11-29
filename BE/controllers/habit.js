@@ -93,6 +93,7 @@ exports.completeHabit = async (req, res) => {
       user.level -= 1;
       console.log("leveld down");
     }
+
     const userwithcoins = await ProfileModel.updateOne({ user: UId }, user);
     const newProfile = await ProfileModel.updateOne(
       { user: UId },

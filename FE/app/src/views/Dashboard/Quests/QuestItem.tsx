@@ -39,18 +39,21 @@ const QuestItem = (props: QuestItemProps) => {
   const [checked, setChecked] = React.useState(false);
 
   useEffect(() => {
-    // props.completedQuests && findQuest(props.completedQuests, props._id)
-    //   ? setChecked(true)
-    //   : setChecked(false);
+    props.completedQuests && findQuest(props.completedQuests, props._id)
+      ? setChecked(true)
+      : setChecked(false);
   }, []);
 
   const findQuest = (questList: [Quest], id: string) => {
+    let ans = false;
     questList.forEach((q) => {
-      if (q._id == id) {
-        return true;
+      console.log(id);
+      console.log(q._id.toString());
+      if (q._id.toString() === id) {
+        ans = true;
       }
     });
-    return false;
+    return ans;
   };
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
