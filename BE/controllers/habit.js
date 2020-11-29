@@ -89,7 +89,7 @@ exports.completeHabit = async (req, res) => {
     user.experience -= habit.exp;
     user.coins -= habit.coins;
 
-    if (user.experience < getCurrentExpGoal(user.level)) {
+    if (user.experience < getCurrentExpGoal(user.level) && user.level > 1) {
       user.level -= 1;
       console.log("leveld down");
     }
