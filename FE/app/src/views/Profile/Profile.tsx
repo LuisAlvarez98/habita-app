@@ -11,6 +11,7 @@ import DatePicker from "react-datepicker";
 import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import { Scrollbars } from "react-custom-scrollbars";
 
 const MainContainer = styled.div`
   display: flex;
@@ -77,10 +78,8 @@ const mockDataHabits = [
 
 const mockDataUser = {
   image: "https://www.abeautifulsite.net/uploads/2014/08/bit-face.png",
-  name: "Luis Alvarez",
 };
 const Profile = () => {
-
   const [searchText, setSearchText] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [userId, setUserId] = React.useState("");
@@ -93,13 +92,13 @@ const Profile = () => {
     hitpoints: 100,
     level: 1,
   });
-// Alert
-const [openAlert, setOpenAlert] = React.useState(false);
+  // Alert
+  const [openAlert, setOpenAlert] = React.useState(false);
 
   useEffect(() => {
     me();
   }, []);
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -148,9 +147,10 @@ const [openAlert, setOpenAlert] = React.useState(false);
       experience: user.experience,
       hitpoints: user.hitpoints,
       level: user.level,
-      fullName: fullName
-    }
-    );
+      fullName: fullName,
+      completedHabits: user.completedHabits,
+      completedQuests: user.completedQuests,
+    });
   };
 
   const handleCloseAlert = (event?: React.SyntheticEvent, reason?: string) => {
@@ -160,46 +160,43 @@ const [openAlert, setOpenAlert] = React.useState(false);
     setOpenAlert(false);
   };
 
-  const handleEditProfile = async () =>{
-      if (
-        user.fullName !== ""
-      ) {
-        const res = await axios
-          .put("http://localhost:8080/api/user/" + userId, {
-            user,
-          })
-          .then((res) => {
-            if (res.status === 200) {
-              console.log(res);
-              handleClose();
-              window.location.reload();
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            if (err.response.status === 404) console.log("Incorrect email");
-            if (err.response.status === 400) console.log("Incorrect password");
-          });
-      } else {
-        setOpenAlert(true);
-      }
-    };
-
+  const handleEditProfile = async () => {
+    if (user.fullName !== "") {
+      const res = await axios
+        .put("http://localhost:8080/api/user/" + userId, {
+          user,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res);
+            handleClose();
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 404) console.log("Incorrect email");
+          if (err.response.status === 400) console.log("Incorrect password");
+        });
+    } else {
+      setOpenAlert(true);
+    }
+  };
 
   const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: "100%",
-      "& > * + *": {
-        marginTop: theme.spacing(2),
+    createStyles({
+      root: {
+        width: "100%",
+        "& > * + *": {
+          marginTop: theme.spacing(2),
+        },
       },
-    },
-    paper: {
-      width: 400,
-      height: 250,
-      backgroundColor: "rgba(196, 196, 196, 1)",
-    },
-  })
+      paper: {
+        width: 400,
+        height: 250,
+        backgroundColor: "rgba(196, 196, 196, 1)",
+      },
+    })
   );
 
   const Alert = (props: AlertProps) => {
@@ -209,6 +206,7 @@ const [openAlert, setOpenAlert] = React.useState(false);
   const classes = useStyles();
   return (
     <MainContainer>
+      {console.log(user)}
       <Grid container spacing={3}>
         <Grid item xs={12} md={4} lg={4}>
           <Container>
@@ -232,7 +230,7 @@ const [openAlert, setOpenAlert] = React.useState(false);
             </Button>
           </Container>
         </Grid>
-        <Grid item xs={12} md={8} lg={8}>
+        <Grid item xs={12} md={4} lg={4}>
           <Container>
             <Title>Completed habits</Title>
             <Grid
@@ -241,73 +239,100 @@ const [openAlert, setOpenAlert] = React.useState(false);
               justify="center"
               alignItems="center"
             >
-              <Box>
-                {mockDataHabits.map((item, index) => {
-                  return (
-                    <HabitDone
-                      key={index}
-                      title={item.title}
-                      coins={item.coins}
-                    />
-                  );
-                })}
-              </Box>
+              <Scrollbars style={{ height: 350 }}>
+                {user.completedHabits &&
+                  user.completedHabits.length > 0 &&
+                  user.completedHabits.map((item, index) => {
+                    return (
+                      <HabitDone
+                        key={index}
+                        title={item.title}
+                        coins={item.coins}
+                      />
+                    );
+                  })}
+              </Scrollbars>
+            </Grid>
+          </Container>
+        </Grid>
+        <Grid item xs={12} md={4} lg={4}>
+          <Container>
+            <Title>Completed quests</Title>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+              <Scrollbars style={{ height: 350 }}>
+                {user.completedQuests &&
+                  user.completedQuests.length > 0 &&
+                  user.completedQuests.map((item, index) => {
+                    return (
+                      <HabitDone
+                        key={index}
+                        title={item.title}
+                        coins={item.coins}
+                      />
+                    );
+                  })}
+              </Scrollbars>
             </Grid>
           </Container>
         </Grid>
       </Grid>
       <Modal
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            outline: "none",
-          }}
-          disableEnforceFocus={true}
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <div className={classes.paper} style={{ alignSelf: "center" }}>
-            <Title>Edit Profile</Title>
-            <ContainerModal>
-              <TextFieldWrapper
-                style={{ margin: 3 }}
-                id="outlined-basic"
-                label="Name"
-                variant="outlined"
-                value={user.fullName}
-                onChange={(e) => setFullName(e.target.value)}
-              />
-              <Button
-                variant="contained"
-                style={{
-                  marginTop: "20px",
-                  borderRadius: 35,
-                  backgroundColor: "rgba(250, 87, 65)",
-                  padding: "14px 18px",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  width: "150px",
-                  color: "#fff",
-                }}
-                onClick={handleEditProfile}
-              >
-                Add
-              </Button>
-              <Snackbar
-                  open={openAlert}
-                  autoHideDuration={6000}
-                  onClose={handleCloseAlert}
-                >
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          outline: "none",
+        }}
+        disableEnforceFocus={true}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <div className={classes.paper} style={{ alignSelf: "center" }}>
+          <Title>Edit Profile</Title>
+          <ContainerModal>
+            <TextFieldWrapper
+              style={{ margin: 3 }}
+              id="outlined-basic"
+              label="Name"
+              variant="outlined"
+              value={user.fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              style={{
+                marginTop: "20px",
+                borderRadius: 35,
+                backgroundColor: "rgba(250, 87, 65)",
+                padding: "14px 18px",
+                fontSize: "14px",
+                fontWeight: "bold",
+                width: "150px",
+                color: "#fff",
+              }}
+              onClick={handleEditProfile}
+            >
+              Add
+            </Button>
+            <Snackbar
+              open={openAlert}
+              autoHideDuration={6000}
+              onClose={handleCloseAlert}
+            >
               <Alert onClose={handleCloseAlert} severity="error">
                 Por favor ingres un nombre.
               </Alert>
             </Snackbar>
-            </ContainerModal>
-          </div>
-        </Modal>
+          </ContainerModal>
+        </div>
+      </Modal>
     </MainContainer>
   );
 };

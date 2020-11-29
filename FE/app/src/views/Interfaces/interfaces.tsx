@@ -23,4 +23,6 @@ export interface User {
   fullName: string;
   hitpoints: number;
   level: number;
+  completedHabits?: [Habit];
+  completedQuests?: [Quest];
 }
