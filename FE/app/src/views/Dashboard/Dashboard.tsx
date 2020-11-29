@@ -6,7 +6,8 @@ import FriendItem from "./FriendItem/FriendItem";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Habit, Quest } from "../Interfaces/interfaces";
+import { Habit, Quest, User } from "../Interfaces/interfaces";
+import QuestItem from "./Quests/QuestItem";
 
 const MainContainer = styled.div`
   display: flex;
@@ -39,6 +40,14 @@ const Dashboard = () => {
   const [userId, setUserId] = React.useState("");
   const [habits, setHabits] = React.useState<Habit[]>([]);
   const [quests, setQuests] = React.useState<Quest[]>([]);
+  const [user, setUser] = React.useState<User>({
+    coins: 0,
+    experience: 0,
+    fullName: "",
+    hitpoints: 100,
+    level: 1,
+  });
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   useEffect(() => {
     const accessToken = localStorage
@@ -55,11 +64,24 @@ const Dashboard = () => {
         getHabits(response.data._id);
         getQuests();
         setUserId(response.data._id);
+        getUserInfo(response.data._id);
       })
       .catch((e) => {
         // Capturamos los errores
       });
   }, []);
+
+  const getUserInfo = (userId: string) => {
+    axios
+      .get(`http://localhost:8080/api/user/info/${userId}`)
+      .then((response) => {
+        setUser(response.data[0]);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   const getHabits = (userId: string) => {
     axios
       .get(`http://localhost:8080/api/habits/${userId}`)
@@ -173,17 +195,20 @@ const Dashboard = () => {
         <Grid item xs={12} md={6} lg={6}>
           <Container>
             <Title>Quests</Title>
-            {quests.slice(0, 2).map((item, index) => {
-              return (
-                <HabitItem
-                  key={index}
-                  title={item.title}
-                  coins={item.coins}
-                  _id={item._id}
-                  status={item.status}
-                />
-              );
-            })}
+            {!isLoading &&
+              quests.slice(0, 2).map((item, index) => {
+                return (
+                  <QuestItem
+                    key={index}
+                    title={item.title}
+                    coins={item.coins}
+                    _id={item._id}
+                    status={item.status}
+                    userId={userId}
+                    completedQuests={user.completedQuests}
+                  />
+                );
+              })}
             <Button
               variant="contained"
               style={{

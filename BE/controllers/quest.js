@@ -11,6 +11,7 @@ const quests = [
     title: "Quest 1",
     description: "12",
     coins: 100,
+    exp: 100,
     duration: "120",
     startDate: "2020-11-28T04:46:24.852Z",
     endDate: "2020-11-28T04:46:24.852Z",
@@ -22,6 +23,7 @@ const quests = [
     title: "Quest 2",
     description: "12",
     coins: 100,
+    exp: 100,
     duration: "120",
     startDate: "2020-11-28T04:46:24.852Z",
     endDate: "2020-11-28T04:46:24.852Z",
@@ -33,6 +35,7 @@ const quests = [
     title: "Quest 3",
     description: "12",
     coins: 100,
+    exp: 100,
     duration: "120",
     startDate: "2020-11-28T04:46:24.852Z",
     endDate: "2020-11-28T04:46:24.852Z",
@@ -44,6 +47,7 @@ const quests = [
     title: "Quest 4",
     description: "12",
     coins: 100,
+    exp: 100,
     duration: "120",
     startDate: "2020-11-28T04:46:24.852Z",
     endDate: "2020-11-28T04:46:24.852Z",
@@ -55,6 +59,7 @@ const quests = [
     title: "Quest 5",
     description: "12",
     coins: 100,
+    exp: 100,
     duration: "120",
     startDate: "2020-11-28T04:46:24.852Z",
     endDate: "2020-11-28T04:46:24.852Z",
@@ -66,6 +71,7 @@ const quests = [
     title: "Quest 6",
     description: "12",
     coins: 100,
+    exp: 100,
     duration: "120",
     startDate: "2020-11-28T04:46:24.852Z",
     endDate: "2020-11-28T04:46:24.852Z",
@@ -77,6 +83,7 @@ const quests = [
     title: "Quest 7",
     description: "12",
     coins: 100,
+    exp: 100,
     duration: "120",
     startDate: "2020-11-28T04:46:24.852Z",
     endDate: "2020-11-28T04:46:24.852Z",
@@ -104,13 +111,15 @@ exports.getQuests = async (req, res) => {
 
 exports.completeQuest = async (req, res) => {
   let { questID, userID } = req.params;
+  let user = await ProfileModel.findOne({ user: userID }).exec();
+
   let quest = await QuestModel.findById(questID);
   if (quest == null)
     return res.status(404).json({ message: "Quest not found." });
 
-  if (quest.status === "Completed") {
-    //quest.status = "Not completed";
-    let user = await ProfileModel.findOne({ user: userID }).exec();
+  let isQuestThere = findQuest(user.completedQuests, questID);
+  console.log(isQuestThere);
+  if (isQuestThere) {
     user.experience -= quest.exp;
     user.coins -= quest.coins;
     const userwithcoins = await ProfileModel.updateOne({ user: userID }, user);
@@ -120,8 +129,6 @@ exports.completeQuest = async (req, res) => {
       { multi: true }
     );
   } else {
-    //quest.status = "Completed";
-    let user = await ProfileModel.findOne({ user: userID }).exec();
     user.experience += quest.exp;
     user.coins += quest.coins;
     const userwithcoins = await ProfileModel.updateOne({ user: userID }, user);
@@ -133,6 +140,15 @@ exports.completeQuest = async (req, res) => {
 
   //const newQuest = await QuestModel.updateOne({ _id: questID }, quest);
   return res.status(200).json({ message: "Quest status changed." });
+};
+
+const findQuest = (questList, id) => {
+  questList.forEach((q) => {
+    if (JSON.stringify(q._id) === JSON.stringify(id)) {
+      return true;
+    }
+  });
+  return false;
 };
 
 exports.setNewQuests = async (req, res) => {
@@ -151,6 +167,8 @@ exports.setNewQuests = async (req, res) => {
 
       newQuests.push(questOne);
       newQuests.push(questTwo);
+      console.log(newQuests);
+
       selectedQuests = newQuests;
     }
   });

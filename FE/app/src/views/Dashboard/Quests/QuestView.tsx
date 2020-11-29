@@ -5,21 +5,10 @@ import { Scrollbars } from "react-custom-scrollbars";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Modal from "@material-ui/core/Modal";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Input from "@material-ui/core/Input";
 import axios from "axios";
-import { Habit, Quest } from "../../Interfaces/interfaces";
-import DatePicker from "react-datepicker";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import { Habit, Quest, User } from "../../Interfaces/interfaces";
 import "react-datepicker/dist/react-datepicker.css";
-import HabitItem from "../Habit/HabitItem";
+import QuestItem from "./QuestItem";
 
 const MainContainer = styled.div`
   display: flex;
@@ -79,12 +68,51 @@ const theme = createMuiTheme({
 const HabitView = () => {
   const [searchText, setSearchText] = React.useState("");
   const [quests, setQuests] = React.useState<Quest[]>([]);
-  const classes = useStyles();
+  const [userId, setUserId] = React.useState("");
+  const [habits, setHabits] = React.useState<Habit[]>([]);
+  const [user, setUser] = React.useState<User>({
+    coins: 0,
+    experience: 0,
+    fullName: "",
+    hitpoints: 100,
+    level: 1,
+  });
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
+  const classes = useStyles();
   useEffect(() => {
     getQuests();
+
+    const accessToken = localStorage
+      .getItem("accessToken")!
+      .replace(/['"]+/g, "");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    axios
+      .get("http://localhost:8080/api/user/me", config)
+      .then((response) => {
+        setUserId(response.data._id);
+        getUserInfo(response.data._id);
+      })
+      .catch((e) => {
+        // Capturamos los errores
+      });
   }, []);
 
+  const getUserInfo = (userId: string) => {
+    axios
+      .get(`http://localhost:8080/api/user/info/${userId}`)
+      .then((response) => {
+        setUser(response.data[0]);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   const getQuests = () => {
     axios
       .get(`http://localhost:8080/api/quests`)
@@ -118,15 +146,17 @@ const HabitView = () => {
             />
           </div>
           <Scrollbars style={{ height: 300 }}>
-            {getData().length > 0 ? (
+            {!isLoading && getData().length > 0 ? (
               getData().map((item, index) => {
                 return (
-                  <HabitItem
+                  <QuestItem
                     key={index}
                     title={item.title}
                     coins={item.coins}
                     _id={item._id}
                     status={item.status}
+                    userId={userId}
+                    completedQuests={user.completedQuests}
                   />
                 );
               })

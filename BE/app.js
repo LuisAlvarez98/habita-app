@@ -62,6 +62,6 @@ db.on("error", () => {
 });
 
 // Cron job for quests
-cron.schedule("5 * * * * *", () => {
-  QuestController.setNewQuests();
+cron.schedule("32 * * * * *", () => {
+  //QuestController.setNewQuests();
 });
