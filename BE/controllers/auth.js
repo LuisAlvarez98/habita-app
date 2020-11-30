@@ -21,7 +21,6 @@ exports.register = async (req, res) => {
     return res.status(400).end();
   }
   // when the user is created we now create the profile
-  console.log(values);
   const profileBody = {
     fullName: values.fullName,
     user: id,
