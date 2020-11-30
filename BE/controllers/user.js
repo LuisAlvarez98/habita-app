@@ -9,7 +9,6 @@ exports.me = (req, res) => {
       decoded;
     try {
       decoded = jwt.verify(authorization, process.env.ACCESS_TOKEN_SECRET);
-      console.log(decoded);
       return res.status(200).json(decoded);
     } catch (e) {
       return res.send("unauthorized");

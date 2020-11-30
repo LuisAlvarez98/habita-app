@@ -6,6 +6,10 @@ export interface Habit {
   _id: string;
   fequencyDescription: string;
   status: string;
+  taskType: string;
+  frecuency: string[];
+  startDate: Date;
+  endDate: Date;
 }
 
 export interface Quest {

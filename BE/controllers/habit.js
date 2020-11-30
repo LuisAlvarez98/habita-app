@@ -51,6 +51,7 @@ exports.getHabits = async (req, res) => {
 
 exports.deleteHabit = async (req, res) => {
   let { id } = req.params;
+  console.log(id);
   try {
     const habit = await HabitModel.find({ _id: id });
     if (habit.length <= 0)
@@ -70,7 +71,8 @@ exports.updateHabit = async (req, res) => {
   let habit = await HabitModel.findById(id);
   if (habit == null)
     return res.status(404).json({ message: "Habit not found." });
-
+    habitBody.coins = calculateCoins(habitBody.duration);
+    habitBody.exp = calculateExp(habitBody.duration);
   const newHabit = await HabitModel.updateOne({ _id: id }, habitBody);
 
   return res.status(200).json({ message: "Habit updated successfully." });

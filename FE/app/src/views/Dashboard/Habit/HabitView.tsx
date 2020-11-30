@@ -19,6 +19,7 @@ import DatePicker from "react-datepicker";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment"
 
 const MainContainer = styled.div`
   display: flex;
@@ -126,16 +127,19 @@ const frequencies = [
 const HabitView = () => {
   const [searchText, setSearchText] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [edit, setEdit] = React.useState(false);
   const [userId, setUserId] = React.useState("");
   const [habits, setHabits] = React.useState<Habit[]>([]);
   //form
   const [title, setTitle] = React.useState("");
+  const [coins, setCoins] = React.useState(0);
   const [description, setDescription] = React.useState("");
   const [taskType, setTaskType] = React.useState("");
   const [frequency, setFrequency] = React.useState<string[]>([]);
-  const [duration, setDuration] = React.useState("");
+  const [duration, setDuration] = React.useState<string>();
   const [startDate, setStartDate] = React.useState<Date>(new Date());
   const [endDate, setEndDate] = React.useState<Date>(new Date());
+  const [habitId, setHabitId] = React.useState("");
   const classes = useStyles();
   // alert
   const [openAlert, setOpenAlert] = React.useState(false);
@@ -209,9 +213,23 @@ const HabitView = () => {
   const handleOpen = () => {
     setOpen(true);
   };
+  const handleEdit = (item: Habit) => {
+    setHabitId(item._id);
+    setEdit(true);
+    setTitle(item.title);
+    setCoins(item.coins);
+    setDescription(item.description);
+    setTaskType(item.taskType);
+    setDuration(item.duration);
+    console.log(item.startDate);
+    //setStartDate(item.startDate);
+    //setEndDate(item.endDate);
+    //setFrequency(item.frecuency);
+  };
 
   const handleClose = () => {
     setOpen(false);
+    setEdit(false);
   };
 
   const getData = () => {
@@ -220,6 +238,62 @@ const HabitView = () => {
     }
     return habits;
   };
+
+const handleDeleteHabit = async () => {
+  console.log(habitId);
+  const res = await axios
+  .delete(`http://localhost:8080/api/habit/${habitId}`)
+  .then((res) => {
+    if (res.status === 200) {
+      console.log(res);
+      handleClose();
+      window.location.reload();
+    }
+  })
+  .catch((err) => {
+    if (err.response.status === 404) console.log("Incorrect email");
+    if (err.response.status === 400) console.log("Incorrect password");
+  });
+}
+
+
+const handleEditHabit = async () => {
+  if (
+    title !== "" &&
+    description !== "" &&
+    taskType !== "" &&
+    frequency.length > 0 &&
+    duration !== ""
+  ) {
+    const res = await axios
+      .put(`http://localhost:8080/api/habit/${habitId}`, {
+        title,
+        description,
+        taskType,
+        frequency: frequency,
+        coins: 100,
+        userId: userId,
+        duration: duration,
+        startDate,
+        endDate,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          handleClose();
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 404) console.log("Incorrect email");
+        if (err.response.status === 400) console.log("Incorrect password");
+      });
+  } else {
+    handleClickAlert();
+  }
+};
+
+
 
   const handleAddHabit = async () => {
     if (
@@ -274,13 +348,33 @@ const HabitView = () => {
             {getData().length > 0
               ? getData().map((item, index) => {
                   return (
-                    <HabitItem
+                    <div>
+                     <HabitItem
                       key={index}
                       title={item.title}
                       coins={item.coins}
                       _id={item._id}
                       status={item.status}
                     />
+
+                    <Button
+                    variant="contained"
+                    onClick={() => handleEdit(item)}
+                    style={{
+                      marginTop: "20px",
+                      borderRadius: 35,
+                      backgroundColor: "red",
+                      padding: "14px 18px",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      width: "150px",
+                      color: "#fff",
+                    }}
+                    >       
+                    Edit habit
+                    </Button>
+                    </div>
+
                   );
                 })
               : [
@@ -417,6 +511,138 @@ const HabitView = () => {
             </ContainerModal>
           </div>
         </Modal>
+
+
+
+
+        <Modal
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            outline: "none",
+          }}
+          disableEnforceFocus={true}
+          open={edit}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div className={classes.paper} style={{ alignSelf: "center" }}>
+            <TitleModal>Edit habit</TitleModal>
+            <ContainerModal>
+              <TextFieldWrapper
+                style={{ margin: 3 }}
+                id="outlined-basic"
+                label="Name of the habit"
+                variant="outlined"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <TextFieldWrapper
+                style={{ margin: 3 }}
+                id="outlined-basic"
+                label="Description of habit"
+                variant="outlined"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <TextFieldWrapper
+                style={{ margin: 3 }}
+                id="outlined-basic"
+                label="Duration"
+                variant="outlined"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+              />
+              <FormControl>
+                <Select
+                  style={{ width: 300, textAlign: "left" }}
+                  value={taskType}
+                  onChange={handleChangeType}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="" disabled>
+                    Select type
+                  </MenuItem>
+                  <MenuItem value={"Mindfulness"}>Mindfulness</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl>
+                <InputLabel id="demo-mutiple-name-label">Frequency</InputLabel>
+                <Select
+                  style={{ width: 300, textAlign: "left" }}
+                  labelId="demo-mutiple-name-label"
+                  id="demo-mutiple-name"
+                  multiple
+                  value={frequency}
+                  onChange={handleChange}
+                  input={<Input />}
+                >
+                  {frequencies.map((f) => (
+                    <MenuItem key={f} value={f}>
+                      {f}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <div>
+                <p style={{ margin: 0, padding: 0, textAlign: "center" }}>
+                  Start date
+                </p>
+                <DatePickerCustom
+                  selected={startDate}
+                  onChange={(date: Date) => setStartDate(date)}
+                />
+                <p style={{ margin: 0, padding: 0, textAlign: "center" }}>
+                  End date
+                </p>
+                <DatePickerCustom
+                  selected={endDate}
+                  onChange={(date: Date) => setEndDate(date)}
+                />
+              </div>
+
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "20px",
+                  borderRadius: 35,
+                  backgroundColor: "red",
+                  padding: "14px 18px",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  width: "150px",
+                  color: "#fff",
+                }}
+                onClick={handleEditHabit}
+              >
+                Update
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "20px",
+                  borderRadius: 35,
+                  backgroundColor: "red",
+                  padding: "14px 18px",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  width: "150px",
+                  color: "#fff",
+                }}
+                onClick={handleDeleteHabit}
+              >
+                Delete
+              </Button>
+            </ContainerModal>
+          </div>
+        </Modal>
+
+
+
         <Snackbar
           open={openAlert}
           autoHideDuration={6000}
