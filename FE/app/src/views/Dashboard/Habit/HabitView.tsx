@@ -20,6 +20,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment"
+import { Grid } from "@material-ui/core";
 
 const MainContainer = styled.div`
   display: flex;
@@ -221,9 +222,10 @@ const HabitView = () => {
     setDescription(item.description);
     setTaskType(item.taskType);
     setDuration(item.duration);
-    console.log(item.startDate);
-    //setStartDate(item.startDate);
-    //setEndDate(item.endDate);
+    console.log(new Date());
+    console.log(new Date(item.startDate));
+    setStartDate(new Date(item.startDate));
+    setEndDate(new Date(item.endDate));
     //setFrequency(item.frecuency);
   };
 
@@ -349,6 +351,9 @@ const handleEditHabit = async () => {
               ? getData().map((item, index) => {
                   return (
                     <div>
+                      <Grid container>
+
+                      <Grid item xs={9}>
                      <HabitItem
                       key={index}
                       title={item.title}
@@ -356,16 +361,16 @@ const handleEditHabit = async () => {
                       _id={item._id}
                       status={item.status}
                     />
-
+                    </Grid>
+                    <Grid item xs={3}>
                     <Button
                     variant="contained"
                     onClick={() => handleEdit(item)}
                     style={{
-                      marginTop: "20px",
                       borderRadius: 35,
                       backgroundColor: "red",
                       padding: "14px 18px",
-                      fontSize: "14px",
+                      fontSize: "10px",
                       fontWeight: "bold",
                       width: "150px",
                       color: "#fff",
@@ -373,6 +378,9 @@ const handleEditHabit = async () => {
                     >       
                     Edit habit
                     </Button>
+                    </Grid>
+
+                    </Grid>
                     </div>
 
                   );
