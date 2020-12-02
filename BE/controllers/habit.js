@@ -32,11 +32,11 @@ exports.createHabit = async (req, res) => {
 const calculateCoins = (duration) => {
   const durationNum = parseInt(duration);
 
-  return MULT_COINS * durationNum;
+  return parseInt(MULT_COINS * durationNum);
 };
 const calculateExp = (duration) => {
   const durationNum = parseInt(duration);
-  return MULT_EXP * durationNum;
+  return parseInt(MULT_EXP * durationNum);
 };
 
 exports.getHabits = async (req, res) => {
@@ -51,11 +51,16 @@ exports.getHabits = async (req, res) => {
 
 exports.deleteHabit = async (req, res) => {
   let { id } = req.params;
-  console.log(id);
   try {
-    const habit = await HabitModel.find({ _id: id });
+    const habit = await HabitModel.findById({ _id: id });
     if (habit.length <= 0)
       return res.status(404).json({ message: "Habit does not exit" });
+
+      const newProfile = await ProfileModel.updateOne(
+        { user: habit.userId },
+        { $pull: { completedHabits: { _id: habit._id } } },
+        { multi: true }
+      );
 
     await HabitModel.deleteOne({ _id: id });
 
@@ -73,6 +78,12 @@ exports.updateHabit = async (req, res) => {
     return res.status(404).json({ message: "Habit not found." });
     habitBody.coins = calculateCoins(habitBody.duration);
     habitBody.exp = calculateExp(habitBody.duration);
+
+    if (habitBody.frequency.length >= 5) {
+      habitBody.fequencyDescription = "daily";
+    } else {
+      habitBody.fequencyDescription = "weekly";
+    }
   const newHabit = await HabitModel.updateOne({ _id: id }, habitBody);
 
   return res.status(200).json({ message: "Habit updated successfully." });
@@ -125,6 +136,13 @@ exports.completeHabit = async (req, res) => {
 
   return res.status(200).json({ message: "Habit status changed." });
 };
+
+
+exports.refreshHabits = async () => {
+  let habits = await HabitModel.find();
+  habits.forEach(item => item.status = "Not completed");
+  habits.save();
+}
 
 const getCurrentExpGoal = (level) => {
   return level * 300 * 1.2;
