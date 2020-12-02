@@ -55,8 +55,6 @@ exports.deleteHabit = async (req, res) => {
     const habit = await HabitModel.findById({ _id: id });
     if (habit.length <= 0)
       return res.status(404).json({ message: "Habit does not exit" });
-      
-      console.log(habit);
 
       const newProfile = await ProfileModel.updateOne(
         { user: habit.userId },
@@ -143,6 +141,7 @@ exports.completeHabit = async (req, res) => {
 exports.refreshHabits = async () => {
   let habits = await HabitModel.find();
   habits.forEach(item => item.status = "Not completed");
+  habits.save();
 }
 
 const getCurrentExpGoal = (level) => {

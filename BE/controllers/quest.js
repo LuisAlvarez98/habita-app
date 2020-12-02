@@ -178,7 +178,6 @@ exports.setNewQuests = async (req, res) => {
 
       newQuests.push(questOne);
       newQuests.push(questTwo);
-      console.log(newQuests);
 
       selectedQuests = newQuests;
     }

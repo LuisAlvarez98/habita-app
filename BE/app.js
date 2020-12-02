@@ -11,6 +11,7 @@ const questRoutes = require("./routes/quest");
 const QuestController = require("./controllers/quest");
 
 const cron = require("node-cron");
+const { refreshHabits } = require("./controllers/habit");
 
 /** Setup Mongoose */
 mongoose.connect("mongodb://localhost/habita", {
@@ -65,3 +66,7 @@ db.on("error", () => {
 cron.schedule("32 * * * * *", () => {
   //QuestController.setNewQuests();
 });
+
+cron.schedule("*/5 * * * *", () => {
+  console.log("Habist refreshed");
+  refreshHabits});
