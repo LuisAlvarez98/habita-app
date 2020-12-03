@@ -6,7 +6,6 @@ import Coin from "../../../img/coin.png";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import { Habit } from "../../Interfaces/interfaces";
-import CreateIcon from "@material-ui/icons/Create";
 const Cell = styled.div`
   height: 40px;
   width: 100%;
@@ -18,13 +17,6 @@ const Cell = styled.div`
   &:hover {
     background-color: grey;
   }
-`;
-
-const EditButton = styled(Button)`
-  min-width: 32px;
-  width: 32px;
-  height: 32px;
-  margin-right: 10px;
 `;
 
 const CheckButton = styled.div`
@@ -41,10 +33,8 @@ interface HabitItemProps {
   coins: number;
   _id: string;
   status: string;
-  handleEdit: (habit: Habit) => void;
-  habit: Habit;
 }
-const HabitItem = (props: HabitItemProps) => {
+const HabitItemDash = (props: HabitItemProps) => {
   const [checked, setChecked] = React.useState(false);
 
   useEffect(() => {
@@ -105,24 +95,10 @@ const HabitItem = (props: HabitItemProps) => {
               onChange={handleChange}
               inputProps={{ "aria-label": "primary checkbox" }}
             />
-            <EditButton
-              variant="contained"
-              onClick={() => props.handleEdit(props.habit)}
-              disabled={props.status == "Completed"}
-              style={{
-                borderRadius: 35,
-                backgroundColor: "red",
-                fontSize: "7px",
-                fontWeight: "bold",
-                color: "#fff",
-              }}
-            >
-              <CreateIcon style={{ fontSize: "16px" }} />
-            </EditButton>
           </Grid>
         </Grid>
       </Cell>
     </div>
   );
 };
-export default HabitItem;
+export default HabitItemDash;

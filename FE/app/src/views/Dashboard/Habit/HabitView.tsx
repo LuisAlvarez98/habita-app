@@ -19,7 +19,7 @@ import DatePicker from "react-datepicker";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment"
+import moment from "moment";
 import { Grid } from "@material-ui/core";
 
 const MainContainer = styled.div`
@@ -239,44 +239,10 @@ const HabitView = () => {
     return habits;
   };
 
-const handleDeleteHabit = async () => {
-  console.log(habitId);
-  const res = await axios
-  .delete(`http://localhost:8080/api/habit/${habitId}`)
-  .then((res) => {
-    if (res.status === 200) {
-      console.log(res);
-      handleClose();
-      window.location.reload();
-    }
-  })
-  .catch((err) => {
-    if (err.response.status === 404) console.log("Incorrect email");
-    if (err.response.status === 400) console.log("Incorrect password");
-  });
-}
-
-
-const handleEditHabit = async () => {
-  if (
-    title !== "" &&
-    description !== "" &&
-    taskType !== "" &&
-    frequency.length > 0 &&
-    duration !== ""
-  ) {
+  const handleDeleteHabit = async () => {
+    console.log(habitId);
     const res = await axios
-      .put(`http://localhost:8080/api/habit/${habitId}`, {
-        title,
-        description,
-        taskType,
-        frequency: frequency,
-        coins: 100,
-        userId: userId,
-        duration: duration,
-        startDate,
-        endDate,
-      })
+      .delete(`http://localhost:8080/api/habit/${habitId}`)
       .then((res) => {
         if (res.status === 200) {
           console.log(res);
@@ -288,12 +254,43 @@ const handleEditHabit = async () => {
         if (err.response.status === 404) console.log("Incorrect email");
         if (err.response.status === 400) console.log("Incorrect password");
       });
-  } else {
-    handleClickAlert();
-  }
-};
+  };
 
-
+  const handleEditHabit = async () => {
+    if (
+      title !== "" &&
+      description !== "" &&
+      taskType !== "" &&
+      frequency.length > 0 &&
+      duration !== ""
+    ) {
+      const res = await axios
+        .put(`http://localhost:8080/api/habit/${habitId}`, {
+          title,
+          description,
+          taskType,
+          frequency: frequency,
+          coins: 100,
+          userId: userId,
+          duration: duration,
+          startDate,
+          endDate,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res);
+            handleClose();
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 404) console.log("Incorrect email");
+          if (err.response.status === 400) console.log("Incorrect password");
+        });
+    } else {
+      handleClickAlert();
+    }
+  };
 
   const handleAddHabit = async () => {
     if (
@@ -350,38 +347,19 @@ const handleEditHabit = async () => {
                   return (
                     <div>
                       <Grid container>
-
-                      <Grid item xs={9}>
-                     <HabitItem
-                      key={index}
-                      title={item.title}
-                      coins={item.coins}
-                      _id={item._id}
-                      status={item.status}
-                    />
-                    </Grid>
-                    <Grid item xs={3}>
-                    <Button
-                    variant="contained"
-                    onClick={() => handleEdit(item)}
-                    disabled = {item.status == 'Completed'}
-                    style={{
-                      borderRadius: 35,
-                      backgroundColor: "red",
-                      padding: "14px 18px",
-                      fontSize: "10px",
-                      fontWeight: "bold",
-                      width: "150px",
-                      color: "#fff",
-                    }}
-                    >       
-                    Edit habit
-                    </Button>
-                    </Grid>
-
-                    </Grid>
+                        <Grid item xs={12}>
+                          <HabitItem
+                            key={index}
+                            title={item.title}
+                            coins={item.coins}
+                            _id={item._id}
+                            status={item.status}
+                            habit={item}
+                            handleEdit={handleEdit}
+                          />
+                        </Grid>
+                      </Grid>
                     </div>
-
                   );
                 })
               : [
@@ -519,9 +497,6 @@ const handleEditHabit = async () => {
           </div>
         </Modal>
 
-
-
-
         <Modal
           style={{
             display: "flex",
@@ -647,8 +622,6 @@ const handleEditHabit = async () => {
             </ContainerModal>
           </div>
         </Modal>
-
-
 
         <Snackbar
           open={openAlert}

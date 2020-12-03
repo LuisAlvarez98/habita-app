@@ -8,6 +8,8 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Habit, Quest, User } from "../Interfaces/interfaces";
 import QuestItem from "./Quests/QuestItem";
+import HabitItemDash from "./Habit/HabitItemDash";
+import CreateIcon from "@material-ui/icons/Create";
 
 const MainContainer = styled.div`
   display: flex;
@@ -142,7 +144,7 @@ const Dashboard = () => {
             {getDailyHabits().length > 0 ? (
               getDailyHabits().map((item, index) => {
                 return (
-                  <HabitItem
+                  <HabitItemDash
                     key={index}
                     title={item.title}
                     coins={item.coins}
@@ -160,7 +162,7 @@ const Dashboard = () => {
             {getWeeklyHabits().length > 0 ? (
               getWeeklyHabits().map((item, index) => {
                 return (
-                  <HabitItem
+                  <HabitItemDash
                     key={index}
                     title={item.title}
                     coins={item.coins}
