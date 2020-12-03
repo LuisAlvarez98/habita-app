@@ -38,6 +38,7 @@ app.use(questRoutes);
 // Function to create quests TO DO
 QuestController.createQuests();
 QuestController.setNewQuests();
+refreshHabits();
 
 app.get("/", function (req, res) {
   res.send("Welcome to Habita, API working");
@@ -69,4 +70,4 @@ cron.schedule("32 * * * * *", () => {
 
 cron.schedule("*/5 * * * *", () => {
   console.log("Habist refreshed");
-  refreshHabits});
+  refreshHabits()});

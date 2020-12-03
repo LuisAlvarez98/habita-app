@@ -135,7 +135,7 @@ exports.completeQuest = async (req, res) => {
   } else {
     user.experience += quest.exp;
     user.coins += quest.coins;
-    if (user.experience >= getCurrentExpGoal(user.level)) {
+    while (user.experience >= getCurrentExpGoal(user.level)) {
       user.level += 1;
       console.log("leveld up");
     }
