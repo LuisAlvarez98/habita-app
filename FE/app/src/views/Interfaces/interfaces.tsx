@@ -7,7 +7,7 @@ export interface Habit {
   fequencyDescription: string;
   status: string;
   taskType: string;
-  frecuency: string[];
+  frequency: string[];
   startDate: Date;
   endDate: Date;
 }

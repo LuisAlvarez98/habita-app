@@ -222,11 +222,9 @@ const HabitView = () => {
     setDescription(item.description);
     setTaskType(item.taskType);
     setDuration(item.duration);
-    console.log(new Date());
-    console.log(new Date(item.startDate));
     setStartDate(new Date(item.startDate));
     setEndDate(new Date(item.endDate));
-    //setFrequency(item.frecuency);
+    setFrequency(item.frequency);
   };
 
   const handleClose = () => {
@@ -366,6 +364,7 @@ const handleEditHabit = async () => {
                     <Button
                     variant="contained"
                     onClick={() => handleEdit(item)}
+                    disabled = {item.status == 'Completed'}
                     style={{
                       borderRadius: 35,
                       backgroundColor: "red",

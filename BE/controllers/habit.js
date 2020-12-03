@@ -120,7 +120,8 @@ exports.completeHabit = async (req, res) => {
     user.experience += habit.exp;
     user.coins += habit.coins;
     console.log(user.level);
-    if (user.experience >= getCurrentExpGoal(user.level)) {
+
+    while (user.experience >= getCurrentExpGoal(user.level)) {
       user.level += 1;
       console.log("leveld up");
     }
@@ -139,9 +140,20 @@ exports.completeHabit = async (req, res) => {
 
 
 exports.refreshHabits = async () => {
+  let days = ["Sunday","Monday","Tuesday", "Wedensday", "Thursday", "Friday", "Saturday"];
+  let today = new Date()
   let habits = await HabitModel.find();
-  habits.forEach(item => item.status = "Not completed");
-  habits.save();
+  habits.forEach(async (item) => { 
+    let found = item.frequency.find(d => d === days[today.getDay()]);
+    if(found){
+    item.status = "Not completed"; 
+    }
+    if(today > item.endDate){
+      let y  = await item.delete();
+    }else{
+      let x = await item.save();
+    }
+  });
 }
 
 const getCurrentExpGoal = (level) => {
