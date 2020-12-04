@@ -1,7 +1,7 @@
 # Habita App
 Pagina Web para crear nuevos habitos, y llevar control de ellos, mejorarando el estilo de vida.
 
-<h2> Front-End </h2> <img src= "http://javadesde0.com/wp-content/uploads/logo-react.jpg" width="100" height="50">
+<h2> Front-End  <img src= "http://javadesde0.com/wp-content/uploads/logo-react.jpg" width="100" height="50"> </h2>
 
 Desarollamos el cliente en React.
 
