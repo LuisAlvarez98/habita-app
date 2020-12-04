@@ -40,19 +40,19 @@ Registro
 <h3> 
 Dashboard
 </h3>
- <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
+ <img src= "./screenshots/Dashboard.png" width="50" height="50"> 
 <h3> 
 Perfil
 </h3>
- <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
+ <img src= "./screenshots/Perfil.png" width="50" height="50"> 
 <h3> 
 Hábitos
 </h3>
- <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
+ <img src= "./screenshots/Habitos.png" width="50" height="50"> 
 <h3> 
 Quests
 </h3>
- <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
+ <img src= "./screenshots/Quests.png" width="50" height="50"> 
  
 <h2>
 Creado Por
