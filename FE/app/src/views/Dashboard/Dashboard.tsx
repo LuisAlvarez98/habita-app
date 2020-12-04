@@ -190,7 +190,7 @@ const Dashboard = () => {
               }}
               onClick={pushToHabits}
             >
-              See more
+              Ver más
             </Button>
           </Container>
         </Grid>
@@ -225,7 +225,7 @@ const Dashboard = () => {
               }}
               onClick={pushToQuests}
             >
-              See more
+              Ver más
             </Button>
           </Container>
         </Grid>
