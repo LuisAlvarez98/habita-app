@@ -16,6 +16,7 @@ const { refreshHabits } = require("./controllers/habit");
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({ path: ".env" });
 }
+/** Setup Mongoose */
 const db = process.env.DATABASE.replace(
   "<PASSWORD>",
   process.env.DATABASE_PASSWORD
@@ -30,18 +31,13 @@ mongoose
     console.log("DB connection sucessful!");
   });
 
-app.use(express.static(path.resolve("./FE/app/build")));
-
-/** Setup Mongoose */
-
-//db = mongoose.connection;
-
 /** Setup app */
 const app = express();
 
 /** Setup global middlewares */
 app.use(cors);
 app.use(morgan("dev"));
+app.use(express.static(path.resolve("./FE/app/build")));
 
 /** Setup routes */
 
