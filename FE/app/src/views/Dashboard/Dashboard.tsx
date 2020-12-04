@@ -139,7 +139,7 @@ const Dashboard = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={6} lg={6}>
           <Container>
-            <Title>Habitos</Title>
+            <Title>Hábitos</Title>
             <Subtitle>Diarios</Subtitle>
             {getDailyHabits().length > 0 ? (
               getDailyHabits().map((item, index) => {
@@ -155,7 +155,7 @@ const Dashboard = () => {
               })
             ) : (
               <p style={{ color: "white" }}>
-                Actualmente no tienes habitos diarios.
+                Actualmente no tienes hábitos diarios.
               </p>
             )}
             <Subtitle>Semanales</Subtitle>
@@ -173,7 +173,7 @@ const Dashboard = () => {
               })
             ) : (
               <p style={{ color: "white" }}>
-                Actualmente no tienes habitos semanales.
+                Actualmente no tienes hábitos semanales.
               </p>
             )}
             <Button

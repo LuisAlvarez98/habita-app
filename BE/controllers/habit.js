@@ -140,7 +140,7 @@ exports.completeHabit = async (req, res) => {
 
 
 exports.refreshHabits = async () => {
-  let days = ["Sunday","Monday","Tuesday", "Wedensday", "Thursday", "Friday", "Saturday"];
+  let days = ["Domingo","Lunes","Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
   let today = new Date()
   let habits = await HabitModel.find();
   habits.forEach(async (item) => { 

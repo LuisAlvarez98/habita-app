@@ -232,7 +232,7 @@ const Profile = () => {
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
           <Container>
-            <Title>Habitos completados</Title>
+            <Title>Hábitos completados</Title>
             <Grid
               container
               direction="column"

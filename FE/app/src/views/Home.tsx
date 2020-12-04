@@ -49,7 +49,7 @@ const Home = () => {
         <Title>Bienvenid@ a Habita!</Title>
         <Subtitle>
           Una manera interactiva y divertida en donde podras crear y mejorar tus
-          habitos personales!
+          hábitos personales!
         </Subtitle>
         <Button
           variant="contained"

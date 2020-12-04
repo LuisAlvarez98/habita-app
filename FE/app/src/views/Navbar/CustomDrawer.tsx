@@ -121,11 +121,11 @@ const CustomDrawer = (props: DrawerProps) => {
           </ListItemIcon>
           <ListItemText primary={"Dashboard"} />
         </ListItem>
-        <ListItem button key={"Habitos"} onClick={pushToHabits}>
+        <ListItem button key={"Hábitos"} onClick={pushToHabits}>
           <ListItemIcon>
             <AssignmentIcon style={{ color: "white" }} />
           </ListItemIcon>
-          <ListItemText primary={"Habitos"} />
+          <ListItemText primary={"Hábitos"} />
         </ListItem>
         <ListItem button key={"Quests"} onClick={pushToQuests}>
           <ListItemIcon>
