@@ -150,10 +150,10 @@ const HabitView = () => {
       <MainContainer>
         <QuestContainer>
           <div>
-            <Title>Your quests</Title>
+            <Title>Tus quests</Title>
             <TextFieldWrapper
               id="outlined-basic"
-              label="Type to search"
+              label="Escribé para buscar"
               variant="outlined"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}

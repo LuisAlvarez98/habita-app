@@ -334,10 +334,10 @@ const HabitView = () => {
       <MainContainer>
         <HabitContainer>
           <div>
-            <Title>Your habits</Title>
+            <Title>Tus habitos</Title>
             <TextFieldWrapper
               id="outlined-basic"
-              label="Type to search"
+              label="Escribé para buscar"
               variant="outlined"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}

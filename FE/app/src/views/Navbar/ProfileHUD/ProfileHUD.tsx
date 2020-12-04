@@ -69,8 +69,8 @@ const ProfileHUD = (props: ProfileHUDProps) => {
       <AvatarImage src="https://www.abeautifulsite.net/uploads/2014/08/bit-face.png" />
       <div>
         <ProfileInfoItem>{fullName}</ProfileInfoItem>
-        <ProfileInfoItem>Level {level}</ProfileInfoItem>
-        <ProfileInfoItem>{coins} coins</ProfileInfoItem>
+        <ProfileInfoItem>Nivel {level}</ProfileInfoItem>
+        <ProfileInfoItem>{coins} monedas</ProfileInfoItem>
       </div>
       <div>
         <Grid container spacing={0}>
