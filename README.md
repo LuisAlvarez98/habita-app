@@ -4,7 +4,6 @@ Pagina Web para crear nuevos habitos, y llevar control de ellos, mejorarando el 
 <h2> 
   <img src= "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="50" height="50"> 
   Front-End 
-  <img src= "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="50" height="50"> 
 </h2>
 
 Desarollamos el cliente en React.
