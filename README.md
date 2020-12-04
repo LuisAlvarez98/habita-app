@@ -1,5 +1,5 @@
 # Habita App
-Pagina Web para crear nuevos habitos, y llevar control de ellos, mejorarando el estilo de vida.
+Página Web para crear nuevos hábitos, y llevar control de ellos, mejorarando el estilo de vida.
 
 <h2> 
   <img src= "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="50" height="50"> 
@@ -46,7 +46,7 @@ Perfil
 </h3>
  <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
 <h3> 
-Habitos
+Hábitos
 </h3>
  <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
 <h3> 
