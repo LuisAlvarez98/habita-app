@@ -12,6 +12,8 @@ const questRoutes = require("./routes/quest");
 const QuestController = require("./controllers/quest");
 
 const cron = require("node-cron");
+const PORT = process.env.PORT || 8080;
+
 const { refreshHabits } = require("./controllers/habit");
 
 if (process.env.NODE_ENV !== "production") {
@@ -80,7 +82,7 @@ db.on("error", () => {
 
  */
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
   console.log("The server is running on port 8080");
 });
 
