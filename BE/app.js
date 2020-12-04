@@ -3,6 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("./middleware/cors");
+const path = require("path");
 
 const authRoutes = require("./routes/auth");
 const habitRoutes = require("./routes/habit");
@@ -37,7 +38,7 @@ const app = express();
 /** Setup global middlewares */
 app.use(cors);
 app.use(morgan("dev"));
-app.use(express.static(path.resolve("../FE/app/build")));
+app.use(express.static(path.resolve("./FE/app/build")));
 
 /** Setup routes */
 
