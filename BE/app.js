@@ -37,7 +37,7 @@ const app = express();
 /** Setup global middlewares */
 app.use(cors);
 app.use(morgan("dev"));
-app.use(express.static(path.resolve("./FE/app/build")));
+app.use(express.static(path.resolve("../FE/app/build")));
 
 /** Setup routes */
 
