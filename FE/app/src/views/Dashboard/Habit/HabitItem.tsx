@@ -105,20 +105,37 @@ const HabitItem = (props: HabitItemProps) => {
               onChange={handleChange}
               inputProps={{ "aria-label": "primary checkbox" }}
             />
-            <EditButton
-              variant="contained"
-              onClick={() => props.handleEdit(props.habit)}
-              disabled={props.status == "Completed"}
-              style={{
-                borderRadius: 35,
-                backgroundColor: "red",
-                fontSize: "7px",
-                fontWeight: "bold",
-                color: "#fff",
-              }}
-            >
-              <CreateIcon style={{ fontSize: "16px" }} />
-            </EditButton>
+            {props.status === "Completed" ? (
+              <EditButton
+                variant="contained"
+                onClick={() => props.handleEdit(props.habit)}
+                disabled={props.status === "Completed"}
+                style={{
+                  borderRadius: 35,
+                  backgroundColor: "grey",
+                  fontSize: "7px",
+                  fontWeight: "bold",
+                  color: "#fff",
+                }}
+              >
+                <CreateIcon style={{ fontSize: "16px" }} />
+              </EditButton>
+            ) : (
+              <EditButton
+                variant="contained"
+                onClick={() => props.handleEdit(props.habit)}
+                disabled={props.status === "Completed"}
+                style={{
+                  borderRadius: 35,
+                  backgroundColor: "red",
+                  fontSize: "7px",
+                  fontWeight: "bold",
+                  color: "#fff",
+                }}
+              >
+                <CreateIcon style={{ fontSize: "16px" }} />
+              </EditButton>
+            )}
           </Grid>
         </Grid>
       </Cell>

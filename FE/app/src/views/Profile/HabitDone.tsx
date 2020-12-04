@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
+import Coin from "../../img/coin.png";
 
 const Cell = styled.div`
   height: 40px;
@@ -43,6 +44,7 @@ const HabitDone = (props: HabitItemProps) => {
             xs={6}
             style={{ alignSelf: "center", textAlign: "center", color: "white" }}
           >
+            <img width="16px" height="16px" src={Coin} />
             {props.coins}
           </Grid>
         </Grid>

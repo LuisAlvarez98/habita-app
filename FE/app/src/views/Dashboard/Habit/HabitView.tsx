@@ -73,10 +73,26 @@ const FrequencySquare = styled.div`
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "100%",
-      "& > * + *": {
-        marginTop: theme.spacing(2),
+      "& label.Mui-focused": {
+        color: "white",
       },
+      "& .MuiInput-underline:after": {
+        borderBottomColor: "white",
+      },
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "white",
+        },
+        "&:hover fieldset": {
+          borderColor: "white",
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "white",
+        },
+      },
+    },
+    floatingLabelFocusStyle: {
+      color: "white",
     },
     paper: {
       width: 400,
@@ -85,20 +101,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const mockDataHabits = [
-  { habitId: 1, title: "Habit 1", coins: 200 },
-  { habitId: 2, title: "Habit 2", coins: 250 },
-  { habitId: 2, title: "Habit 3", coins: 250 },
-  { habitId: 1, title: "Habit 4", coins: 200 },
-  { habitId: 2, title: "Habit 5", coins: 250 },
-  { habitId: 2, title: "Habit 6", coins: 250 },
-  { habitId: 1, title: "Habit 7", coins: 200 },
-  { habitId: 2, title: "Habit 8", coins: 250 },
-  { habitId: 2, title: "Habit 9", coins: 250 },
-  { habitId: 1, title: "Habit 10", coins: 200 },
-  { habitId: 2, title: "Habit 11", coins: 250 },
-  { habitId: 2, title: "Habit 12", coins: 250 },
-];
 
 const theme = createMuiTheme({
   palette: {
@@ -339,6 +341,10 @@ const HabitView = () => {
               variant="outlined"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
+              className={classes.root}
+              InputLabelProps={{
+                className: classes.floatingLabelFocusStyle,
+              }}
             />
           </div>
           <Scrollbars style={{ height: 300 }}>
@@ -439,6 +445,10 @@ const HabitView = () => {
                     Select type
                   </MenuItem>
                   <MenuItem value={"Mindfulness"}>Mindfulness</MenuItem>
+                  <MenuItem value={"School"}>School</MenuItem>
+                  <MenuItem value={"Fitness"}>Fitness</MenuItem>
+                  <MenuItem value={"Personal"}>Personal</MenuItem>
+                  <MenuItem value={"Other"}>Other</MenuItem>
                 </Select>
               </FormControl>
               <FormControl>
@@ -549,6 +559,10 @@ const HabitView = () => {
                     Select type
                   </MenuItem>
                   <MenuItem value={"Mindfulness"}>Mindfulness</MenuItem>
+                  <MenuItem value={"School"}>School</MenuItem>
+                  <MenuItem value={"Fitness"}>Fitness</MenuItem>
+                  <MenuItem value={"Personal"}>Personal</MenuItem>
+                  <MenuItem value={"Other"}>Other</MenuItem>
                 </Select>
               </FormControl>
               <FormControl>

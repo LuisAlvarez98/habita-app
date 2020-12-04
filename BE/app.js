@@ -63,11 +63,8 @@ db.on("error", () => {
   console.log("DB connection error");
 });
 
-// Cron job for quests
-cron.schedule("32 * * * * *", () => {
-  //QuestController.setNewQuests();
-});
-
 cron.schedule("*/5 * * * *", () => {
   console.log("Habist refreshed");
-  refreshHabits()});
+  refreshHabits();
+  QuestController.setNewQuests();
+});

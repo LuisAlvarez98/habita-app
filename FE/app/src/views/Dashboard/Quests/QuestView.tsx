@@ -41,10 +41,26 @@ const TextFieldWrapper = styled(TextField)`
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "100%",
-      "& > * + *": {
-        marginTop: theme.spacing(2),
+      "& label.Mui-focused": {
+        color: "white",
       },
+      "& .MuiInput-underline:after": {
+        borderBottomColor: "white",
+      },
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "white",
+        },
+        "&:hover fieldset": {
+          borderColor: "white",
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "white",
+        },
+      },
+    },
+    floatingLabelFocusStyle: {
+      color: "white",
     },
     paper: {
       width: 400,
@@ -97,9 +113,7 @@ const HabitView = () => {
         setUserId(response.data._id);
         getUserInfo(response.data._id);
       })
-      .catch((e) => {
-        // Capturamos los errores
-      });
+      .catch((e) => {});
   }, []);
 
   const getUserInfo = (userId: string) => {
@@ -143,6 +157,10 @@ const HabitView = () => {
               variant="outlined"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
+              className={classes.root}
+              InputLabelProps={{
+                className: classes.floatingLabelFocusStyle,
+              }}
             />
           </div>
           <Scrollbars style={{ height: 300 }}>
