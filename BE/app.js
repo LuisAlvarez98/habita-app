@@ -1,4 +1,4 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
@@ -13,13 +13,28 @@ const QuestController = require("./controllers/quest");
 const cron = require("node-cron");
 const { refreshHabits } = require("./controllers/habit");
 
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config({ path: ".env" });
+}
+const db = process.env.DATABASE.replace(
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD
+);
+mongoose
+  .connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then((connection) => {
+    console.log("DB connection sucessful!");
+  });
+
+app.use(express.static(path.resolve("./FE/app/build")));
+
 /** Setup Mongoose */
-mongoose.connect("mongodb://localhost/habita", {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
+
+//db = mongoose.connection;
 
 /** Setup app */
 const app = express();
@@ -40,8 +55,12 @@ QuestController.createQuests();
 QuestController.setNewQuests();
 refreshHabits();
 
-app.get("/", function (req, res) {
-  res.send("Welcome to Habita, API working");
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("./FE/app/build/index.html"));
+});
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.resolve("./FE/app/build/index.html"));
 });
 
 app.all("*", (req, res) => {
@@ -52,15 +71,20 @@ app.all("*", (req, res) => {
 
 /** Init */
 
-db.once("open", () => {
+/**
+ * 
+ * db.once("open", () => {
   console.log("Connected to the db");
-  app.listen(8080, () => {
-    console.log("The server is running on port 8080");
-  });
 });
 
 db.on("error", () => {
   console.log("DB connection error");
+});
+
+ */
+
+app.listen(8080, () => {
+  console.log("The server is running on port 8080");
 });
 
 cron.schedule("*/5 * * * *", () => {
