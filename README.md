@@ -32,11 +32,11 @@ Pantallas
 <h3> 
 Inicio de sesión
 </h3>
- <img src= "https://lfas-portfolio-98.s3.amazonaws.com/img/Screen+Shot+2020-12-04+at+14.40.19.png" width="250" height="250"> 
+ <img src= "https://lfas-portfolio-98.s3.amazonaws.com/img/Screen+Shot+2020-12-04+at+14.40.19.png" width="350" height="250"> 
 <h3> 
 Registro
 </h3>
- <img src= "https://lfas-portfolio-98.s3.amazonaws.com/img/Screen+Shot+2020-12-04+at+14.43.26.png" width="250" height="250"> 
+ <img src= "https://lfas-portfolio-98.s3.amazonaws.com/img/Screen+Shot+2020-12-04+at+14.43.26.png" width="350" height="250"> 
 <h3> 
 Dashboard
 </h3>
