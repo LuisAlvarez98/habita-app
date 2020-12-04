@@ -1,7 +1,7 @@
 # Habita App
 Pagina Web para crear nuevos habitos, y llevar control de ellos, mejorarando el estilo de vida.
 
-<h2 align="center"> <img src= "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="50" height="50"> Front-End <img src= "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="50" height="50"> </h2>
+<h2 align="center" text-align= "center"> <img src= "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="50" height="50"> Front-End <img src= "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="50" height="50"> </h2>
 Desarollamos el cliente en React.
 
 <h2 align="center"> <img src= "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" width="50" height="50"> Back-End  <img src= "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" width="50" height="50"> </h2>
