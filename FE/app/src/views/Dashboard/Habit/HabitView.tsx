@@ -118,13 +118,13 @@ const Alert = (props: AlertProps) => {
 };
 
 const frequencies = [
-  "Monday",
-  "Tuesday",
-  "Wedensday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
+  "Lunes",
+  "Martes",
+  "Miercoles",
+  "Jueves",
+  "Viernes",
+  "Sabado",
+  "Domingo",
 ];
 
 const HabitView = () => {
@@ -334,7 +334,7 @@ const HabitView = () => {
       <MainContainer>
         <HabitContainer>
           <div>
-            <Title>Tus habitos</Title>
+            <Title>Tus hábitos</Title>
             <TextFieldWrapper
               id="outlined-basic"
               label="Escríbe para buscar"
@@ -371,7 +371,7 @@ const HabitView = () => {
               : [
                   !isLoading && (
                     <p style={{ color: "white" }}>
-                      No tienes actualmente habitos o no han sido encontrados.
+                      No tienes actualmente hábitos o no han sido encontrados.
                     </p>
                   ),
                 ]}
