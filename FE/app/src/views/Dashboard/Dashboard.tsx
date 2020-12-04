@@ -61,7 +61,7 @@ const Dashboard = () => {
       },
     };
     axios
-      .get("http://localhost:8080/api/user/me", config)
+      .get("https://habita-app.herokuapp.com/api/user/me", config)
       .then((response) => {
         getHabits(response.data._id);
         getQuests();
@@ -75,7 +75,7 @@ const Dashboard = () => {
 
   const getUserInfo = (userId: string) => {
     axios
-      .get(`http://localhost:8080/api/user/info/${userId}`)
+      .get(`https://habita-app.herokuapp.com/api/user/info/${userId}`)
       .then((response) => {
         setUser(response.data[0]);
         setIsLoading(false);
@@ -86,7 +86,7 @@ const Dashboard = () => {
   };
   const getHabits = (userId: string) => {
     axios
-      .get(`http://localhost:8080/api/habits/${userId}`)
+      .get(`https://habita-app.herokuapp.com/api/habits/${userId}`)
       .then((response) => {
         setHabits(response.data);
       })
@@ -97,7 +97,7 @@ const Dashboard = () => {
 
   const getQuests = () => {
     axios
-      .get(`http://localhost:8080/api/quests/`)
+      .get(`https://habita-app.herokuapp.com/api/quests/`)
       .then((response) => {
         setQuests(response.data);
       })
@@ -139,8 +139,8 @@ const Dashboard = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={6} lg={6}>
           <Container>
-            <Title>Habits</Title>
-            <Subtitle>Daily</Subtitle>
+            <Title>Habitos</Title>
+            <Subtitle>Diarios</Subtitle>
             {getDailyHabits().length > 0 ? (
               getDailyHabits().map((item, index) => {
                 return (
@@ -158,7 +158,7 @@ const Dashboard = () => {
                 Actualmente no tienes habitos diarios.
               </p>
             )}
-            <Subtitle>Weekly</Subtitle>
+            <Subtitle>Semanales</Subtitle>
             {getWeeklyHabits().length > 0 ? (
               getWeeklyHabits().map((item, index) => {
                 return (
@@ -190,7 +190,7 @@ const Dashboard = () => {
               }}
               onClick={pushToHabits}
             >
-              See more
+              Ver más
             </Button>
           </Container>
         </Grid>
@@ -225,7 +225,7 @@ const Dashboard = () => {
               }}
               onClick={pushToQuests}
             >
-              See more
+              Ver más
             </Button>
           </Container>
         </Grid>

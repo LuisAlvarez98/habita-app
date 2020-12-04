@@ -110,7 +110,7 @@ const Profile = () => {
   //this function gets the info of the user.
   const getUserInfo = (userId: string) => {
     axios
-      .get(`http://localhost:8080/api/user/info/${userId}`)
+      .get(`https://habita-app.herokuapp.com/api/user/info/${userId}`)
       .then((response) => {
         setUser(response.data[0]);
       })
@@ -130,7 +130,7 @@ const Profile = () => {
         },
       };
       axios
-        .get("http://localhost:8080/api/user/me", config)
+        .get("https://habita-app.herokuapp.com/api/user/me", config)
         .then((response) => {
           setUserId(response.data._id);
           getUserInfo(response.data._id);
@@ -163,7 +163,7 @@ const Profile = () => {
   const handleEditProfile = async () => {
     if (user.fullName !== "") {
       const res = await axios
-        .put("http://localhost:8080/api/user/" + userId, {
+        .put("https://habita-app.herokuapp.com/api/user/" + userId, {
           user,
         })
         .then((res) => {
@@ -226,13 +226,13 @@ const Profile = () => {
                 color: "#fff",
               }}
             >
-              Edit Profile
+              Editar perfil
             </Button>
           </Container>
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
           <Container>
-            <Title>Completed habits</Title>
+            <Title>Habitos completados</Title>
             <Grid
               container
               direction="column"
@@ -257,7 +257,7 @@ const Profile = () => {
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
           <Container>
-            <Title>Completed quests</Title>
+            <Title>Quests completadas</Title>
             <Grid
               container
               direction="column"
@@ -295,12 +295,12 @@ const Profile = () => {
         aria-describedby="simple-modal-description"
       >
         <div className={classes.paper} style={{ alignSelf: "center" }}>
-          <Title>Edit Profile</Title>
+          <Title>Editar perfil</Title>
           <ContainerModal>
             <TextFieldWrapper
               style={{ margin: 3 }}
               id="outlined-basic"
-              label="Name"
+              label="Nombre"
               variant="outlined"
               value={user.fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -319,7 +319,7 @@ const Profile = () => {
               }}
               onClick={handleEditProfile}
             >
-              Add
+              Editar
             </Button>
             <Snackbar
               open={openAlert}

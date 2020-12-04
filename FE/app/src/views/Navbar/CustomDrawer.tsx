@@ -111,7 +111,7 @@ const CustomDrawer = (props: DrawerProps) => {
       >
         <AvatarImage src="https://www.abeautifulsite.net/uploads/2014/08/bit-face.png" />
         <h3>{props.user.fullName}</h3>
-        <p>Level {props.user.level}</p>
+        <p>Nivel {props.user.level}</p>
       </div>
 
       <List>
@@ -121,11 +121,11 @@ const CustomDrawer = (props: DrawerProps) => {
           </ListItemIcon>
           <ListItemText primary={"Dashboard"} />
         </ListItem>
-        <ListItem button key={"Habits"} onClick={pushToHabits}>
+        <ListItem button key={"Habitos"} onClick={pushToHabits}>
           <ListItemIcon>
             <AssignmentIcon style={{ color: "white" }} />
           </ListItemIcon>
-          <ListItemText primary={"Habits"} />
+          <ListItemText primary={"Habitos"} />
         </ListItem>
         <ListItem button key={"Quests"} onClick={pushToQuests}>
           <ListItemIcon>
@@ -133,20 +133,20 @@ const CustomDrawer = (props: DrawerProps) => {
           </ListItemIcon>
           <ListItemText primary={"Quests"} />
         </ListItem>
-        <ListItem button key={"Profile"} onClick={pushToProfile}>
+        <ListItem button key={"Perfil"} onClick={pushToProfile}>
           <ListItemIcon>
             <FaceIcon style={{ color: "white" }} />
           </ListItemIcon>
-          <ListItemText primary={"Profile"} />
+          <ListItemText primary={"Perfil"} />
         </ListItem>
       </List>
       <Divider />
       <List>
-        <ListItem button key={"Logout"} onClick={logoutUser}>
+        <ListItem button key={"Cerrar Sesión"} onClick={logoutUser}>
           <ListItemIcon>
             <Logout style={{ color: "white" }} />
           </ListItemIcon>
-          <ListItemText primary={"Logout"} />
+          <ListItemText primary={"Cerrar Sesión"} />
         </ListItem>
       </List>
     </div>

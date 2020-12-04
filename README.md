@@ -1,19 +1,18 @@
 # Habita App
-Pagina Web para crear nuevos habitos, y llevar control de ellos, mejorarando el estilo de vida.
+Página Web para crear nuevos hábitos, y llevar control de ellos, mejorarando el estilo de vida.
 
 <h2> 
   <img src= "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="50" height="50"> 
-  Front-End 
+  Front end 
 </h2>
 
-Desarollamos el cliente en React.
+Desarrollamos el Front de Habita con el framework React.js usando Typescript como lenguaje principal.
 
 <h2> 
   <img src= "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" width="50" height="50"> 
-  Back-End  
+  Back end  
 </h2>
-Desarollamos un servidor en node js.
-
+Desarrollamos el servidor usando Node.js con Express.js
 <h2> 
   <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
   Bases de Datos  
@@ -31,24 +30,23 @@ Pantallas
 </h2>
 
 <h3> 
-Login
+Inicio de sesión
 </h3>
- <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
-
+ <img src= "https://lfas-portfolio-98.s3.amazonaws.com/img/Screen+Shot+2020-12-04+at+14.40.19.png" width="350" height="250"> 
 <h3> 
-Sign up
+Registro
 </h3>
- <img src= "https://infinapps.com/wp-content/uploads/2018/10/mongodb-logo.png" width="50" height="50"> 
+ <img src= "https://lfas-portfolio-98.s3.amazonaws.com/img/Screen+Shot+2020-12-04+at+14.43.26.png" width="350" height="250"> 
 <h3> 
 Dashboard
 </h3>
  <img src= "./screenshots/Dashboard.png" width="50" height="50"> 
 <h3> 
-Profile
+Perfil
 </h3>
  <img src= "./screenshots/Perfil.png" width="50" height="50"> 
 <h3> 
-Habitos
+Hábitos
 </h3>
  <img src= "./screenshots/Habitos.png" width="50" height="50"> 
 <h3> 
@@ -68,7 +66,7 @@ Creado Por
     Patricio Andres Saldivar Flores A01282504
     </li>
     <li>
-    Luis Felipe 
+    Luis Felipe Alvarez Sanchez A01194173
     </li>
 </ul>
 

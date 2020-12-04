@@ -1,8 +1,9 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("./middleware/cors");
+const path = require("path");
 
 const authRoutes = require("./routes/auth");
 const habitRoutes = require("./routes/habit");
@@ -11,15 +12,27 @@ const questRoutes = require("./routes/quest");
 const QuestController = require("./controllers/quest");
 
 const cron = require("node-cron");
+const PORT = process.env.PORT || 8080;
+
 const { refreshHabits } = require("./controllers/habit");
 
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config({ path: ".env" });
+}
 /** Setup Mongoose */
-mongoose.connect("mongodb://localhost/habita", {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
+const db = process.env.DATABASE.replace(
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD
+);
+mongoose
+  .connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then((connection) => {
+    console.log("DB connection sucessful!");
+  });
 
 /** Setup app */
 const app = express();
@@ -27,6 +40,7 @@ const app = express();
 /** Setup global middlewares */
 app.use(cors);
 app.use(morgan("dev"));
+app.use(express.static(path.resolve("./FE/app/build")));
 
 /** Setup routes */
 
@@ -40,8 +54,12 @@ QuestController.createQuests();
 QuestController.setNewQuests();
 refreshHabits();
 
-app.get("/", function (req, res) {
-  res.send("Welcome to Habita, API working");
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("./FE/app/build/index.html"));
+});
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.resolve("./FE/app/build/index.html"));
 });
 
 app.all("*", (req, res) => {
@@ -52,15 +70,20 @@ app.all("*", (req, res) => {
 
 /** Init */
 
-db.once("open", () => {
+/**
+ * 
+ * db.once("open", () => {
   console.log("Connected to the db");
-  app.listen(8080, () => {
-    console.log("The server is running on port 8080");
-  });
 });
 
 db.on("error", () => {
   console.log("DB connection error");
+});
+
+ */
+
+app.listen(PORT, () => {
+  console.log("The server is running on port 8080");
 });
 
 cron.schedule("*/5 * * * *", () => {

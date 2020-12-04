@@ -118,13 +118,13 @@ const Alert = (props: AlertProps) => {
 };
 
 const frequencies = [
-  "Monday",
-  "Tuesday",
-  "Wedensday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
+  "Lunes",
+  "Martes",
+  "Miercoles",
+  "Jueves",
+  "Viernes",
+  "Sabado",
+  "Domingo",
 ];
 
 const HabitView = () => {
@@ -159,7 +159,7 @@ const HabitView = () => {
       },
     };
     axios
-      .get("http://localhost:8080/api/user/me", config)
+      .get("https://habita-app.herokuapp.com/api/user/me", config)
       .then((response) => {
         getHabits(response.data._id);
         setUserId(response.data._id);
@@ -183,7 +183,7 @@ const HabitView = () => {
   };
   const getHabits = (userId: string) => {
     axios
-      .get(`http://localhost:8080/api/habits/${userId}`)
+      .get(`https://habita-app.herokuapp.com/api/habits/${userId}`)
       .then((response) => {
         setHabits(response.data);
       })
@@ -244,7 +244,7 @@ const HabitView = () => {
   const handleDeleteHabit = async () => {
     console.log(habitId);
     const res = await axios
-      .delete(`http://localhost:8080/api/habit/${habitId}`)
+      .delete(`https://habita-app.herokuapp.com/api/habit/${habitId}`)
       .then((res) => {
         if (res.status === 200) {
           console.log(res);
@@ -267,7 +267,7 @@ const HabitView = () => {
       duration !== ""
     ) {
       const res = await axios
-        .put(`http://localhost:8080/api/habit/${habitId}`, {
+        .put(`https://habita-app.herokuapp.com/api/habit/${habitId}`, {
           title,
           description,
           taskType,
@@ -303,7 +303,7 @@ const HabitView = () => {
       duration !== ""
     ) {
       const res = await axios
-        .post("http://localhost:8080/api/habit", {
+        .post("https://habita-app.herokuapp.com/api/habit", {
           title,
           description,
           taskType,
@@ -334,10 +334,10 @@ const HabitView = () => {
       <MainContainer>
         <HabitContainer>
           <div>
-            <Title>Your habits</Title>
+            <Title>Tus hábitos</Title>
             <TextFieldWrapper
               id="outlined-basic"
-              label="Type to search"
+              label="Escríbe para buscar"
               variant="outlined"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
@@ -371,7 +371,7 @@ const HabitView = () => {
               : [
                   !isLoading && (
                     <p style={{ color: "white" }}>
-                      No tienes actualmente habitos o no han sido encontrados.
+                      No tienes actualmente hábitos o no han sido encontrados.
                     </p>
                   ),
                 ]}
@@ -386,11 +386,11 @@ const HabitView = () => {
               padding: "14px 18px",
               fontSize: "14px",
               fontWeight: "bold",
-              width: "150px",
+              width: "220px",
               color: "#fff",
             }}
           >
-            Add habit
+            Agregar habito
           </Button>
         </HabitContainer>
         <Modal
@@ -407,12 +407,12 @@ const HabitView = () => {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.paper} style={{ alignSelf: "center" }}>
-            <TitleModal>Add habit</TitleModal>
+            <TitleModal>Agregar habito</TitleModal>
             <ContainerModal>
               <TextFieldWrapper
                 style={{ margin: 3 }}
                 id="outlined-basic"
-                label="Name of the habit"
+                label="Nombre del habito"
                 variant="outlined"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -420,7 +420,7 @@ const HabitView = () => {
               <TextFieldWrapper
                 style={{ margin: 3 }}
                 id="outlined-basic"
-                label="Description of habit"
+                label="Descripción del habito"
                 variant="outlined"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -428,7 +428,7 @@ const HabitView = () => {
               <TextFieldWrapper
                 style={{ margin: 3 }}
                 id="outlined-basic"
-                label="Duration"
+                label="Duración"
                 variant="outlined"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
@@ -442,7 +442,7 @@ const HabitView = () => {
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value="" disabled>
-                    Select type
+                    Seleccionar tipo
                   </MenuItem>
                   <MenuItem value={"Mindfulness"}>Mindfulness</MenuItem>
                   <MenuItem value={"School"}>School</MenuItem>
@@ -452,7 +452,7 @@ const HabitView = () => {
                 </Select>
               </FormControl>
               <FormControl>
-                <InputLabel id="demo-mutiple-name-label">Frequency</InputLabel>
+                <InputLabel id="demo-mutiple-name-label">Frecuencia</InputLabel>
                 <Select
                   style={{ width: 300, textAlign: "left" }}
                   labelId="demo-mutiple-name-label"
@@ -472,14 +472,14 @@ const HabitView = () => {
 
               <div>
                 <p style={{ margin: 0, padding: 0, textAlign: "center" }}>
-                  Start date
+                  Fecha inicio
                 </p>
                 <DatePickerCustom
                   selected={startDate}
                   onChange={(date: Date) => setStartDate(date)}
                 />
                 <p style={{ margin: 0, padding: 0, textAlign: "center" }}>
-                  End date
+                  Fecha de terminación
                 </p>
                 <DatePickerCustom
                   selected={endDate}
@@ -501,7 +501,7 @@ const HabitView = () => {
                 }}
                 onClick={handleAddHabit}
               >
-                Add
+                Agregar
               </Button>
             </ContainerModal>
           </div>
@@ -521,12 +521,12 @@ const HabitView = () => {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.paper} style={{ alignSelf: "center" }}>
-            <TitleModal>Edit habit</TitleModal>
+            <TitleModal>Editar habito</TitleModal>
             <ContainerModal>
               <TextFieldWrapper
                 style={{ margin: 3 }}
                 id="outlined-basic"
-                label="Name of the habit"
+                label="Nombre del habito"
                 variant="outlined"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -534,7 +534,7 @@ const HabitView = () => {
               <TextFieldWrapper
                 style={{ margin: 3 }}
                 id="outlined-basic"
-                label="Description of habit"
+                label="Descripción del habito"
                 variant="outlined"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -542,7 +542,7 @@ const HabitView = () => {
               <TextFieldWrapper
                 style={{ margin: 3 }}
                 id="outlined-basic"
-                label="Duration"
+                label="Duración"
                 variant="outlined"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
@@ -556,7 +556,7 @@ const HabitView = () => {
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value="" disabled>
-                    Select type
+                    Seleccionar tipo
                   </MenuItem>
                   <MenuItem value={"Mindfulness"}>Mindfulness</MenuItem>
                   <MenuItem value={"School"}>School</MenuItem>
@@ -566,7 +566,7 @@ const HabitView = () => {
                 </Select>
               </FormControl>
               <FormControl>
-                <InputLabel id="demo-mutiple-name-label">Frequency</InputLabel>
+                <InputLabel id="demo-mutiple-name-label">Frecuencia</InputLabel>
                 <Select
                   style={{ width: 300, textAlign: "left" }}
                   labelId="demo-mutiple-name-label"
@@ -586,14 +586,14 @@ const HabitView = () => {
 
               <div>
                 <p style={{ margin: 0, padding: 0, textAlign: "center" }}>
-                  Start date
+                  Fecha inicio
                 </p>
                 <DatePickerCustom
                   selected={startDate}
                   onChange={(date: Date) => setStartDate(date)}
                 />
                 <p style={{ margin: 0, padding: 0, textAlign: "center" }}>
-                  End date
+                  Fecha de terminación
                 </p>
                 <DatePickerCustom
                   selected={endDate}
@@ -611,11 +611,12 @@ const HabitView = () => {
                   fontSize: "14px",
                   fontWeight: "bold",
                   width: "150px",
+                  marginRight: "10px",
                   color: "#fff",
                 }}
                 onClick={handleEditHabit}
               >
-                Update
+                Actualizar
               </Button>
               <Button
                 variant="contained"
@@ -631,7 +632,7 @@ const HabitView = () => {
                 }}
                 onClick={handleDeleteHabit}
               >
-                Delete
+                Borrar
               </Button>
             </ContainerModal>
           </div>

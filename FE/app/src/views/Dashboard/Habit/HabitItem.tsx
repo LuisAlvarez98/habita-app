@@ -58,7 +58,10 @@ const HabitItem = (props: HabitItemProps) => {
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
     const res = await axios
-      .put(`http://localhost:8080/api/habit/confirm/${props._id}`, {})
+      .put(
+        `https://habita-app.herokuapp.com/api/habit/confirm/${props._id}`,
+        {}
+      )
       .then((res) => {
         if (res.status === 200) {
           console.log(res);
