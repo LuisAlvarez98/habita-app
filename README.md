@@ -33,30 +33,32 @@ Pantallas
 Inicio de sesión
 </h3>
  <img src= "https://lfas-portfolio-98.s3.amazonaws.com/img/Screen+Shot+2020-12-04+at+14.40.19.png" width="350" height="250"> 
-<h3> 
   Esta pantalla tiene como funcionalidad el inicio de sesión, el usuario deberá de ingresar su correo con el que registró a la página y su contraseña.
+<h3> 
 Registro
 </h3>
  <img src= "https://lfas-portfolio-98.s3.amazonaws.com/img/Screen+Shot+2020-12-04+at+14.43.26.png" width="350" height="250"> 
+   Esta pantalla se utiliza para registrar a un usuario en nuestra página web, el usuario deberá de ingresar sus datos como el nombre, correo electrónico y contraseña.
 <h3> 
-  Esta pantalla se utiliza para registrar a un usuario en nuestra página web, el usuario deberá de ingresar sus datos como el nombre, correo electrónico y contraseña.
 Dashboard
 </h3>
  <img src= "./screenshots/Dashboard.png" width="350" height="250"> 
+ La página inicial se redirige al tablero, en donde el usuario puede marcar sus hábitos como completados al igual que las misiones auto generadas.
 <h3> 
-La página inicial se redirige al tablero, en donde el usuario puede marcar sus hábitos como completados al igual que las misiones auto generadas.
 Perfil
 </h3>
  <img src= "./screenshots/Perfil.png" width="350" height="250"> 
+ La pantalla de perfil le muestra al usuario su información y un listado de hábitos compilados al igual que misiones completadas. En esta pantalla el usuario podrá editar su perfil y cambiarse el nombre.
 <h3> 
 Hábitos
 </h3>
  <img src= "./screenshots/Habitos.png" width="350" height="250"> 
+ La pantalla de hábitos demuestra todos los habitos que el usuario ha registrado y este puede agregar más o editar los que ya existen.
 <h3> 
 Quests
 </h3>
  <img src= "./screenshots/Quests.png" width="350" height="250"> 
- 
+ La pantalla de quests demuestra todos las misiones que están activas para el usuario, y el usuario al igual que en la pantalla principal puede marcarlas como completadas o inconclusas.
 <h2>
 Creado Por
 </h2>
