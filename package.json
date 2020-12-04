@@ -1,0 +1,20 @@
+{
+  "name": "habita",
+  "version": "1.0.0",
+  "description": "Pagina Web para crear nuevos habitos, y llevar control de ellos, mejorarando el estilo de vida.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd BE && npm install",
+    "start": "node BE/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisAlvarez98/habita-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuisAlvarez98/habita-app/issues"
+  },
+  "homepage": "https://github.com/LuisAlvarez98/habita-app#readme"
+}
