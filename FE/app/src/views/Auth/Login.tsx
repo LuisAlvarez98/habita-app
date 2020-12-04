@@ -6,6 +6,7 @@ import { useLocalStorage } from "use-hooks";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
   palette: {
@@ -62,9 +63,38 @@ const Login = () => {
     }
   }, []);
 
+  const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        "& label.Mui-focused": {
+          color: "white",
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "white",
+        },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: "white",
+          },
+          "&:hover fieldset": {
+            borderColor: "white",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "white",
+          },
+        },
+      },
+      floatingLabelFocusStyle: {
+        color: "white",
+      },
+    })
+  );
+  const classes = useStyles();
+
   function pushRegister() {
     history.push("/register");
   }
+
   const handleLogin = async () => {
     const res = await axios
       .post("http://localhost:8080/api/user/login", {
@@ -103,21 +133,29 @@ const Login = () => {
                     marginBottom: "1em",
                   }}
                   id="outlined-basic"
-                  label="Email"
+                  label="Correo electrónico"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="example@email.com"
                   variant="outlined"
+                  className={classes.root}
+                  InputLabelProps={{
+                    className: classes.floatingLabelFocusStyle,
+                  }}
                 />
               </div>
               <TextFieldWrapper
                 id="outlined-basic"
-                label="Password"
+                label="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder="Contraseña"
                 variant="outlined"
+                className={classes.root}
                 type="password"
+                InputLabelProps={{
+                  className: classes.floatingLabelFocusStyle,
+                }}
               />
               <div>
                 <Button
@@ -126,20 +164,20 @@ const Login = () => {
                     marginTop: "3em",
                     borderRadius: 35,
                     padding: "14px 18px",
-                    fontSize: "16px",
+                    fontSize: "14px",
                     color: "white",
                     fontWeight: "bold",
-                    width: "150px",
+                    width: "175px ",
                   }}
                   color="primary"
                   onClick={handleLogin}
                 >
-                  Sign in
+                  Iniciar sesión
                 </Button>
               </div>
-              <small>You don't have an account?</small>
+              <small>¿No tienes cuenta?</small>
               <Button onClick={pushRegister} color="secondary">
-                Register now!
+                Registrarse ya!
               </Button>
             </form>
           </div>

@@ -6,6 +6,7 @@ import { useLocalStorage } from "use-hooks";
 import { useEffect } from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -51,6 +52,35 @@ const Register = () => {
     "refreshToken",
     ""
   );
+  const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        "& label.Mui-focused": {
+          color: "white",
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "white",
+        },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: "white",
+          },
+          "&:hover fieldset": {
+            borderColor: "white",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "white",
+          },
+        },
+      },
+      floatingLabelFocusStyle: {
+        color: "white",
+      },
+    })
+  );
+
+  const classes = useStyles();
+
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       history.push("/dashboard");
@@ -118,7 +148,7 @@ const Register = () => {
     <MuiThemeProvider theme={theme}>
       <Container>
         <div>
-          <h1>Register</h1>
+          <h1>Registro</h1>
           <div className="login-form">
             <form id="login-form">
               <div>
@@ -127,11 +157,15 @@ const Register = () => {
                     marginBottom: "1em",
                   }}
                   id="outlined-basic"
-                  label="Name"
+                  label="Nombre"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Name"
+                  placeholder="Nombre"
                   variant="outlined"
+                  className={classes.root}
+                  InputLabelProps={{
+                    className: classes.floatingLabelFocusStyle,
+                  }}
                 />
               </div>
               <div>
@@ -140,11 +174,15 @@ const Register = () => {
                     marginBottom: "1em",
                   }}
                   id="outlined-basic"
-                  label="Email"
+                  label="Correo electrónico"
                   value={email}
+                  className={classes.root}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="example@email.com"
                   variant="outlined"
+                  InputLabelProps={{
+                    className: classes.floatingLabelFocusStyle,
+                  }}
                 />
               </div>
               <TextFieldWrapper
@@ -152,22 +190,30 @@ const Register = () => {
                   marginBottom: "1em",
                 }}
                 id="outlined-basic"
-                label="Password"
+                label="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder="Contraseña"
+                className={classes.root}
                 variant="outlined"
                 type="password"
+                InputLabelProps={{
+                  className: classes.floatingLabelFocusStyle,
+                }}
               />
               <div></div>
               <TextFieldWrapper
                 id="outlined-basic"
-                label="ConfirmPassword"
+                label="Confirmar contraseña"
                 value={cPassword}
                 onChange={(e) => setCPassword(e.target.value)}
-                placeholder="Password"
+                placeholder="Contraseña"
+                className={classes.root}
                 variant="outlined"
                 type="password"
+                InputLabelProps={{
+                  className: classes.floatingLabelFocusStyle,
+                }}
               />
               <div>
                 <Button
@@ -176,15 +222,15 @@ const Register = () => {
                     marginTop: "3em",
                     borderRadius: 35,
                     padding: "14px 18px",
-                    fontSize: "16px",
+                    fontSize: "14px",
                     color: "white",
                     fontWeight: "bold",
-                    width: "150px",
+                    width: "175px ",
                   }}
                   color="primary"
                   onClick={handleRegister}
                 >
-                  Sign Up
+                  Registrarse
                 </Button>
               </div>
             </form>

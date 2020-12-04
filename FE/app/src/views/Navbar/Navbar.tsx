@@ -103,15 +103,15 @@ const Navbar = () => {
         <CustomNavbar elevation={0} position="static">
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
-              <a href="/">
+              <a style={{ float: "left" }} href="/">
                 <LogoImage src={Logo} />
               </a>
             </Typography>
             <Button color="inherit" onClick={pushRegister}>
-              Register
+              Registro
             </Button>
             <Button color="inherit" onClick={pushLogin}>
-              Login
+              Iniciar sesión
             </Button>
           </Toolbar>
         </CustomNavbar>

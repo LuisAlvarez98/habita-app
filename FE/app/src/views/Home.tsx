@@ -46,10 +46,10 @@ const Home = () => {
   return (
     <MuiThemeProvider theme={theme}>
       <Container>
-        <Title>Welcome to Habita</Title>
+        <Title>Bienvenid@ a Habita!</Title>
         <Subtitle>
-          An interactive fun website where you will create and improve your
-          habits.
+          Una manera interactiva y divertida en donde podras crear y mejorar tus
+          habitos personales!
         </Subtitle>
         <Button
           variant="contained"
@@ -60,13 +60,13 @@ const Home = () => {
             padding: "14px 18px",
             fontSize: "14px",
             fontWeight: "bold",
-            width: "150px",
+            width: "200px",
             alignSelf: "center",
             color: "#fff",
           }}
           onClick={pushRegister}
         >
-          Try it out!
+          Pruebala ahora!
         </Button>
       </Container>
     </MuiThemeProvider>
