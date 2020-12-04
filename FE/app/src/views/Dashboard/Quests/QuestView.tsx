@@ -108,7 +108,7 @@ const HabitView = () => {
       },
     };
     axios
-      .get("http://localhost:8080/api/user/me", config)
+      .get("https://habita-app.herokuapp.com/api/user/me", config)
       .then((response) => {
         setUserId(response.data._id);
         getUserInfo(response.data._id);
@@ -118,7 +118,7 @@ const HabitView = () => {
 
   const getUserInfo = (userId: string) => {
     axios
-      .get(`http://localhost:8080/api/user/info/${userId}`)
+      .get(`https://habita-app.herokuapp.com/api/user/info/${userId}`)
       .then((response) => {
         setUser(response.data[0]);
         setIsLoading(false);
@@ -129,7 +129,7 @@ const HabitView = () => {
   };
   const getQuests = () => {
     axios
-      .get(`http://localhost:8080/api/quests`)
+      .get(`https://habita-app.herokuapp.com/api/quests`)
       .then((response) => {
         setQuests(response.data);
       })

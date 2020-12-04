@@ -105,7 +105,7 @@ const Register = () => {
     }
     if (readyToRegister) {
       const res = await axios
-        .post("http://localhost:8080/api/user/register", {
+        .post("https://habita-app.herokuapp.com/api/user/register", {
           email,
           password,
           fullName,
@@ -121,7 +121,7 @@ const Register = () => {
 
   const handleLogin = async () => {
     const res = await axios
-      .post("http://localhost:8080/api/user/login", {
+      .post("https://habita-app.herokuapp.com/api/user/login", {
         email,
         password,
       })

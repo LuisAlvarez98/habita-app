@@ -97,7 +97,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     const res = await axios
-      .post("http://localhost:8080/api/user/login", {
+      .post("https://habita-app.herokuapp.com/api/user/login", {
         email,
         password,
       })

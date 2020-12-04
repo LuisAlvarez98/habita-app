@@ -110,7 +110,7 @@ const Profile = () => {
   //this function gets the info of the user.
   const getUserInfo = (userId: string) => {
     axios
-      .get(`http://localhost:8080/api/user/info/${userId}`)
+      .get(`https://habita-app.herokuapp.com/api/user/info/${userId}`)
       .then((response) => {
         setUser(response.data[0]);
       })
@@ -130,7 +130,7 @@ const Profile = () => {
         },
       };
       axios
-        .get("http://localhost:8080/api/user/me", config)
+        .get("https://habita-app.herokuapp.com/api/user/me", config)
         .then((response) => {
           setUserId(response.data._id);
           getUserInfo(response.data._id);
@@ -163,7 +163,7 @@ const Profile = () => {
   const handleEditProfile = async () => {
     if (user.fullName !== "") {
       const res = await axios
-        .put("http://localhost:8080/api/user/" + userId, {
+        .put("https://habita-app.herokuapp.com/api/user/" + userId, {
           user,
         })
         .then((res) => {

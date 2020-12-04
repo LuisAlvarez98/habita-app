@@ -58,7 +58,10 @@ const QuestItem = (props: QuestItemProps) => {
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
     const res = await axios
-      .put(`http://localhost:8080/api/quests/${props._id}/${props.userId}`, {})
+      .put(
+        `https://habita-app.herokuapp.com/api/quests/${props._id}/${props.userId}`,
+        {}
+      )
       .then((res) => {
         if (res.status === 200) {
           console.log(res);

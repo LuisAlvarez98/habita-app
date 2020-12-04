@@ -159,7 +159,7 @@ const HabitView = () => {
       },
     };
     axios
-      .get("http://localhost:8080/api/user/me", config)
+      .get("https://habita-app.herokuapp.com/api/user/me", config)
       .then((response) => {
         getHabits(response.data._id);
         setUserId(response.data._id);
@@ -183,7 +183,7 @@ const HabitView = () => {
   };
   const getHabits = (userId: string) => {
     axios
-      .get(`http://localhost:8080/api/habits/${userId}`)
+      .get(`https://habita-app.herokuapp.com/api/habits/${userId}`)
       .then((response) => {
         setHabits(response.data);
       })
@@ -244,7 +244,7 @@ const HabitView = () => {
   const handleDeleteHabit = async () => {
     console.log(habitId);
     const res = await axios
-      .delete(`http://localhost:8080/api/habit/${habitId}`)
+      .delete(`https://habita-app.herokuapp.com/api/habit/${habitId}`)
       .then((res) => {
         if (res.status === 200) {
           console.log(res);
@@ -267,7 +267,7 @@ const HabitView = () => {
       duration !== ""
     ) {
       const res = await axios
-        .put(`http://localhost:8080/api/habit/${habitId}`, {
+        .put(`https://habita-app.herokuapp.com/api/habit/${habitId}`, {
           title,
           description,
           taskType,
@@ -303,7 +303,7 @@ const HabitView = () => {
       duration !== ""
     ) {
       const res = await axios
-        .post("http://localhost:8080/api/habit", {
+        .post("https://habita-app.herokuapp.com/api/habit", {
           title,
           description,
           taskType,
